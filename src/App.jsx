@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { subscriber } from "./services/themeService";
-import "./App.scss";
+import WithToken from "./components/authHOC/withTokenCompoent";
 import Home from "./components/home";
 import Editor from "./components/editorComponent/editor";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import article from "./components/articleComponent/articleContainer";
 import UserArticles from "./components/userArticlesComponent/userArticle";
+import Login from "./components/loginComponent/login";
+import "./App.scss";
 
 const AppContainerWrapper = styled.div`
   width: 100%;
   min-height: 100%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 
   ${props =>
     props.theme === "dark" &&
@@ -47,8 +49,13 @@ const App = () => {
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/editor" component={Editor} />
-            <Route exact path="/my-articles" component={UserArticles} />
+            <Route exact path="/editor" component={WithToken(Editor)} />
+            <Route
+              exact
+              path="/my-articles"
+              component={WithToken(UserArticles)}
+            />
+            <Route exact path="/login" component={Login} />
             <Route exact path="/:slug" component={article} />
           </Switch>
           <Footer />

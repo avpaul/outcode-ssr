@@ -1,0 +1,54 @@
+.login-button {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 250px;
+  height: 42px;
+  margin: 8px auto;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  background-color: #ffffff;
+  color: #ffffff;
+  border: none;
+  border-radius: 21px;
+  transform: translateX(-50%);
+  cursor: pointer;
+  overflow: hidden;
+  &:hover {
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+      0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  }
+  &:focus {
+    outline: none;
+  }
+
+  .login-button__email,
+  .login-button__password,
+  .login-button__btn {
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    border: none;
+    font-weight: 200;
+    font-size: 16px;
+    text-align: center;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .login-button__email {
+  }
+  .login-button__password {
+  }
+  .login-button__btn {
+    font-weight: 500;
+    letter-spacing: 1px;
+    background-color: #f9a602;
+    cursor: pointer;
+  }
+}
