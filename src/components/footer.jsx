@@ -21,20 +21,46 @@ const Navbar = () => {
         <div
           style={{
             borderRight: "2px #6B778D solid",
-            padding: 8,
+            paddingLeft: 4,
+            paddingRight: 4,
             display: "inline-block"
           }}
         >
-          <div style={{ color: "#17223B", fontSize: 32 }}>outcode</div>
-          <div style={{ color: "#6B778D", textAlign: "right" }}>by paul</div>
+          <div style={{ color: "#17223B", fontSize: 32, fontFamily: "Avenir" }}>
+            outcode
+          </div>
+          <div
+            style={{
+              color: "#6B778D",
+              textAlign: "right",
+              fontFamily: "Avenir"
+            }}
+          >
+            by paul
+          </div>
         </div>
-        <div style={{ display: "inline-block", padding: 8, color: "#6B778D" }}>
+        <div
+          style={{
+            display: "inline-block",
+            paddingLeft: 4,
+            paddingRight: 4,
+            color: "#6B778D",
+            fontFamily: "Avenir"
+          }}
+        >
           <span>&#169;&nbsp;</span>
           <span>avpaul&nbsp; 2019</span>
         </div>
       </div>
       <div className="footer-spacer" />
-      <div style={{ minWidth: 300, color: "#6B778D" }}>
+      <div
+        style={{
+          minWidth: 350,
+          color: "#6B778D",
+          fontFamily: "Avenir",
+          fontWeight: 200
+        }}
+      >
         Designed with much&nbsp;
         <span role="img" aria-label="heart">
           ❤️&nbsp;

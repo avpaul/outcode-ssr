@@ -8,8 +8,8 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: row;
   justify-contents: center;
-  height: 64px;
-  padding: 8px 0;
+  height: 80px;
+  padding: 16px 0;
   border-bottom: 1px solid #6b778d;
   .nav-logo {
     min-width: 300px;
