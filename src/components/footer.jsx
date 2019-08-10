@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { subscriber } from "../services/themeService";
 
 const Footer = styled.footer`
   display: flex;
@@ -15,25 +16,41 @@ const Footer = styled.footer`
 `;
 
 const Navbar = () => {
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    subscriber.subscribe(value => {
+      setTheme(value);
+    });
+  }, []);
+
   return (
     <Footer>
       <div style={{ minWidth: 350, fontWeight: 300 }}>
         <div
           style={{
             borderRight: "2px #6B778D solid",
+            borderRightColor: `${theme === "dark" ? "#FFFFFF" : "#6B778D"}}`,
             paddingLeft: 4,
             paddingRight: 4,
             display: "inline-block"
           }}
         >
-          <div style={{ color: "#17223B", fontSize: 32, fontFamily: "Avenir" }}>
+          <div
+            style={{
+              color: `${theme === "dark" ? "#FFFFFF" : "#17223B"}`,
+              fontSize: 32,
+              fontFamily: "Avenir"
+            }}
+          >
             outcode
           </div>
           <div
             style={{
-              color: "#6B778D",
+              color: `${theme === "dark" ? "#FFFFFF" : "#6B778D"}`,
               textAlign: "right",
-              fontFamily: "Avenir"
+              fontFamily: "Avenir",
+              fontSize: 16
             }}
           >
             by paul
@@ -44,8 +61,9 @@ const Navbar = () => {
             display: "inline-block",
             paddingLeft: 4,
             paddingRight: 4,
-            color: "#6B778D",
-            fontFamily: "Avenir"
+            color: `${theme === "dark" ? "#FFFFFF" : "#6B778D"}`,
+            fontFamily: "Avenir",
+            fontSize: 16
           }}
         >
           <span>&#169;&nbsp;</span>
@@ -56,9 +74,10 @@ const Navbar = () => {
       <div
         style={{
           minWidth: 350,
-          color: "#6B778D",
+          color: `${theme === "dark" ? "#FFFFFF" : "#6B778D"}`,
           fontFamily: "Avenir",
-          fontWeight: 200
+          fontWeight: 200,
+          fontSize: 18
         }}
       >
         Designed with much&nbsp;

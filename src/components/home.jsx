@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ArticleView from "./articleViewComponent/articleView";
 import MainArticleView from "./mainArticle";
 import { mainArticle } from "../helpers/data.js";
 import { getMainArticles } from "../api/article";
+import { subscriber } from "../services/themeService";
 
 const SecondaryArticles = styled.section`
   display: flex;
@@ -34,10 +35,22 @@ const ReloadBtn = styled.button`
     color: #ffffff;
     background-color: #6b778d;
   }
+  ${props =>
+    props.theme === "dark" &&
+    css`
+      color: #ffffff;
+      border-color: #ffffff;
+      background-color: transparent;
+      &:hover {
+        background-color: transparent;
+      }
+    `}
 `;
 
 const Home = () => {
   const [articles, setArticles] = useState([]);
+  const [theme, seTheme] = useState("light");
+
   const colors = [
     "#167C80",
     "#72616E",
@@ -55,15 +68,18 @@ const Home = () => {
       .catch(error => {
         console.log(error);
       });
+    subscriber.subscribe(value => {
+      seTheme(value);
+    });
   }, []);
   return (
     <div style={{ marginTop: 32, marginBottom: 32 }}>
-      <MainArticleView article={mainArticle} />
+      <MainArticleView article={mainArticle} theme={theme} />
       <SecondaryArticles>
         {articles.map((article, index) => (
           <ArticleView
             bgColor={colors[index]}
-            key={articles._id}
+            key={article.slug}
             article={article}
           />
         ))}
@@ -75,7 +91,7 @@ const Home = () => {
           justifyContent: "flex-end"
         }}
       >
-        <ReloadBtn>
+        <ReloadBtn theme={theme}>
           <i className="zmdi zmdi-replay" />
           &nbsp; load more
         </ReloadBtn>

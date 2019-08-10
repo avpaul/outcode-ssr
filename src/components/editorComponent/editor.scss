@@ -26,6 +26,15 @@
     display: block;
     color: #888888;
   }
+  &.theme-dark {
+    &:empty:before {
+      content: attr(placeholder);
+      display: block;
+      color: #ffffff;
+    }
+    background-color: #17223b;
+    color: #ffffff;
+  }
 }
 .article-editor--view {
   width: 90%;
@@ -40,6 +49,7 @@
   flex-direction: column;
 }
 .btn-editor-preview,
+.btn-editor-upload,
 .btn-publish {
   display: inline-block;
   width: 36px;
@@ -68,6 +78,19 @@
   &[disabled] {
     color: #888888;
     border-color: #888888;
+  }
+  &.theme-dark {
+    color: #ffffff;
+    background-color: transparent;
+    border-color: #ffffff;
+    &:hover:not([disabled]) {
+      color: #17223b;
+      background-color: #ffffff;
+    }
+    &[disabled] {
+      color: #888888;
+      border-color: #888888;
+    }
   }
 }
 

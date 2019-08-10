@@ -8,9 +8,8 @@ import {
   getPublishedArticles,
   deleteArticle
 } from "../../api/article";
-import {
-  subscriber
-} from "../../services/updateArticleService";
+import { subscriber } from "../../services/updateArticleService";
+import { subscriber as themeSubscriber } from "../../services/themeService";
 
 const NoArticlesBanner = styled.div`
   margin-top: 14px;
@@ -22,15 +21,16 @@ const NoArticlesBanner = styled.div`
   a {
     text-decoration: none;
     color: inherit;
-    &:hover{
+    &:hover {
       text-decoration: underline;
     }
   }
 `;
 
-const UserArticles = ({ history }) => {
+const UserArticles = () => {
   const [publishedArticles, setPublishedArticles] = useState([]);
   const [draftArticles, setDraftArticles] = useState([]);
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     getPublishedArticles({ page: 0, limit: 6 })
@@ -43,6 +43,9 @@ const UserArticles = ({ history }) => {
         setDraftArticles(data);
       })
       .catch(error => {});
+    themeSubscriber.subscribe(value => {
+      setTheme(value);
+    });
   }, []);
 
   const renderDrafts = () => {
@@ -50,7 +53,10 @@ const UserArticles = ({ history }) => {
       <List>
         {draftArticles.length !== 0 ? (
           draftArticles.map(article => (
-            <div className="list-item" key={article.slug}>
+            <div
+              className={`list-item ${theme === "dark" ? "theme-dark" : ""}`}
+              key={article.slug}
+            >
               <h2 className="tab-title">{article.title}</h2>
               <div className="list-actions">
                 <button
@@ -96,7 +102,10 @@ const UserArticles = ({ history }) => {
       <List>
         {publishedArticles.length !== 0 ? (
           publishedArticles.map(article => (
-            <div className="list-item" key={article.slug}>
+            <div
+              className={`list-item ${theme === "dark" ? "theme-dark" : ""}`}
+              key={article.slug}
+            >
               <Link to={`/${article.slug}`} className="tab-title">
                 {article.title}
               </Link>
@@ -141,6 +150,7 @@ const UserArticles = ({ history }) => {
       <TabContainer
         tabs={["published", "drafts"]}
         tabContent={{ published: renderPublished(), drafts: renderDrafts() }}
+        theme={theme}
       />
     </div>
   );

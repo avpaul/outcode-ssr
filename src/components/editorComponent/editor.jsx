@@ -7,6 +7,7 @@ import Chips from "../chips/chips";
 import upLoader from "../../helpers/imageUploader";
 import { getTitle, getDescription } from "../../helpers/getArticleParts";
 import { subscriber } from "../../services/updateArticleService";
+import { subscriber as themeSubscriber } from "../../services/themeService";
 import { getArticle } from "../../api/article.js";
 import "./editor.scss";
 
@@ -28,6 +29,7 @@ const Editor = ({ history }) => {
   const [chips, setChips] = useState([]);
   const [preview, setPreview] = useState(false);
   const [imageUploaded, setImageUploaded] = useState(false);
+  const [theme, seTheme] = useState("light");
   const imageInput = useRef(null);
   const markdownInput = useRef(null);
 
@@ -42,6 +44,9 @@ const Editor = ({ history }) => {
             setStatus(article.status);
           })
           .catch(error => {});
+    });
+    themeSubscriber.subscribe(value => {
+      seTheme(value);
     });
   }, []);
 
@@ -113,7 +118,9 @@ const Editor = ({ history }) => {
       </div>
       <div className="editor-actions">
         <button
-          className="btn-editor-preview"
+          className={`btn-editor-preview ${
+            theme === "dark" ? "theme-dark" : ""
+          }`}
           onClick={() => {
             setPreview(!preview);
           }}
@@ -121,7 +128,9 @@ const Editor = ({ history }) => {
           <i className={`zmdi zmdi-${!preview ? "eye" : "edit"}`} />
         </button>
         <button
-          className="btn-editor-preview"
+          className={`btn-editor-upload ${
+            theme === "dark" ? "theme-dark" : ""
+          }`}
           onClick={evt => {
             evt.preventDefault();
             imageInput.current.click();
@@ -147,7 +156,7 @@ const Editor = ({ history }) => {
           }
         />
         <button
-          className="btn-publish"
+          className={`btn-publish ${theme === "dark" ? "theme-dark" : ""}`}
           disabled={slug === null ? true : false}
           onClick={onPublish}
         >
@@ -157,7 +166,9 @@ const Editor = ({ history }) => {
       {!preview ? (
         <Fragment>
           <textarea
-            className="article-editor--container"
+            className={`article-editor--container ${
+              theme === "dark" ? "theme-dark" : ""
+            }`}
             placeholder="Tell your story..."
             value={content}
             ref={markdownInput}
@@ -170,11 +181,12 @@ const Editor = ({ history }) => {
             onChange={values => {
               setChips([...values]);
             }}
+            theme={theme}
           />
         </Fragment>
       ) : (
         <div className="article-editor--view">
-          <Article content={contentHTML} tags={chips} />
+          <Article content={contentHTML} tags={chips} theme={theme} />
         </div>
       )}
     </Container>

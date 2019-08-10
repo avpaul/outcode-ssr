@@ -61,8 +61,9 @@ $medium-and-up: 768px;
   pre {
     width: 90%;
     margin: 16px auto;
-    background-color: #17223b;
     padding: 25px 50px;
+    background-color: #17223b;
+    border-radius: 2px;
     overflow-y: auto;
   }
   code:not([class]) {
@@ -95,6 +96,32 @@ $medium-and-up: 768px;
   ol {
     margin-left: 24px;
   }
+  &.theme-dark {
+    h1,
+    h2,
+    h3 {
+      color: #ffffff;
+    }
+    p,
+    ul,
+    li,
+    div {
+      color: #ffffff;
+    }
+    a {
+      color: #a6e22e;
+      text-decoration-color: #66d9ef;
+    }
+    pre {
+      background-color: #3b3c36;
+    }
+    code:not([class]) {
+      background-color: darken(#f6f8fa, 45%);
+    }
+    blockquote {
+      background-color: darken(#f6f8fa, 45%);
+    }
+  }
 }
 
 .btn--back-home {
@@ -119,6 +146,10 @@ $medium-and-up: 768px;
   &:hover {
     color: #ffffff;
     background-color: #17223b;
+  }
+  &.theme-dark {
+    color: #ffffff;
+    border-color: #ffffff;
   }
 }
 .article-tag {

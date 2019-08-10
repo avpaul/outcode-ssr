@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import "./article.scss";
 
-const Article = ({ content, tags = [] }) => {
+const Article = ({ content, tags = [], theme }) => {
   // TODO: Find out why react html parser removes the indentation in a code element
   // const body = ReactHTMLParser(content, {});
   const renderTags = () =>
@@ -13,7 +13,7 @@ const Article = ({ content, tags = [] }) => {
   return (
     <Fragment>
       <div
-        className="article--container"
+        className={`article--container theme-${theme}`}
         dangerouslySetInnerHTML={{ __html: content }}
       />
       {tags.length > 0 && renderTags()}

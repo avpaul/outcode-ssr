@@ -57,9 +57,11 @@ class Chips extends Component {
   };
 
   render() {
-    const { value } = this.props;
+    const { value, theme } = this.props;
     return (
-      <div className="chips-container">
+      <div
+        className={`chips-container ${theme === "dark" ? "theme-dark" : ""}`}
+      >
         <input
           type="text"
           id="chip"
