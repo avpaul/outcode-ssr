@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import ArticleView from "./articleView";
+import ArticleView from "./articleViewComponent/articleView";
 import MainArticleView from "./mainArticle";
-import { articles, mainArticle } from "../helpers/data.js";
+import { mainArticle } from "../helpers/data.js";
+import { getMainArticles } from "../api/article";
 
 const SecondaryArticles = styled.section`
   display: flex;
@@ -36,19 +37,36 @@ const ReloadBtn = styled.button`
 `;
 
 const Home = () => {
+  const [articles, setArticles] = useState([]);
+  const colors = [
+    "#167C80",
+    "#72616E",
+    "#17223B",
+    "#E8846B",
+    "#16528E",
+    "#FFC045"
+  ];
+
+  useEffect(() => {
+    getMainArticles({ page: 0, limit: 7 })
+      .then(({ data }) => {
+        setArticles(data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
   return (
     <div style={{ marginTop: 32, marginBottom: 32 }}>
       <MainArticleView article={mainArticle} />
       <SecondaryArticles>
-        {["#167C80", "#72616E", "#17223B", "#E8846B", "#16528E", "#FFC045"].map(
-          (article, index) => (
-            <ArticleView
-              bgColor={article}
-              key={articles[index].id}
-              article={articles[index]}
-            />
-          )
-        )}
+        {articles.map((article, index) => (
+          <ArticleView
+            bgColor={colors[index]}
+            key={articles._id}
+            article={article}
+          />
+        ))}
       </SecondaryArticles>
       <div
         style={{

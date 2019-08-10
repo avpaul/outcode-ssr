@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Article from "./article";
 import { Link } from "react-router-dom";
+import Article from "./article";
+import { getArticle } from "../../api/article";
+import convertFromMarkdown from "../../helpers/markdownConverter";
 
 const ArticleInfo = styled.div`
   padding-top: 16px;
@@ -18,15 +20,29 @@ const Wrapper = styled.div`
   margin-bottom: 16px;
 `;
 
-const ArticleContainer = () => {
+const ArticleContainer = ({ match }) => {
+  const [article, setArticle] = useState({ content: "", tags: [] });
+
+  useEffect(() => {
+    const { slug } = match.params;
+    getArticle(slug)
+      .then(({ data }) => {
+        setArticle(data);
+      })
+      .catch(error => {});
+  }, [match.params]);
+
   return (
     <Wrapper>
-      <Article content="" />
+      <Article
+        content={convertFromMarkdown(article.content)}
+        tags={article.tags}
+      />
       <ArticleInfo>
         <p>
-          Written by <strong>Paul</strong>
+          Written by <strong>{article.author}</strong>
         </p>
-        <p>Published 23rd July 2019</p>
+        <p>Published on {new Date(article.updatedAt).toDateString()}</p>
       </ArticleInfo>
       <Link to="/" className="btn--back-home">
         <i className="zmdi zmdi-long-arrow-left" />

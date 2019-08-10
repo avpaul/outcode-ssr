@@ -8,6 +8,7 @@ import Editor from "./components/editorComponent/editor";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import article from "./components/articleComponent/articleContainer";
+import UserArticles from './components/userArticlesComponent/userArticle';
 
 const AppContainer = styled.div`
   position: relative;
@@ -26,6 +27,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/editor" component={Editor} />
+          <Route exact path="/my-articles" component={UserArticles}/>
           <Route exact path="/:slug" component={article} />
         </Switch>
         <Footer />

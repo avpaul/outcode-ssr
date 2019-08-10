@@ -39,7 +39,8 @@
   display: flex;
   flex-direction: column;
 }
-.btn-editor-preview {
+.btn-editor-preview,
+.btn-publish {
   display: inline-block;
   width: 36px;
   height: 36px;
@@ -60,9 +61,13 @@
   &:focus {
     outline: none;
   }
-  &:hover {
+  &:hover:not([disabled]) {
     color: #ffffff;
     background-color: #17223b;
+  }
+  &[disabled] {
+    color: #888888;
+    border-color: #888888;
   }
 }
 
