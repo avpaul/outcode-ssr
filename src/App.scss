@@ -20,10 +20,16 @@
   box-sizing: border-box;
 }
 
-html {
+html,
+body {
+  height: 100%;
+  width: 100%;
   font-family: "Avenir";
 }
-
+div#root {
+  height: 100%;
+  width: 100%;
+}
 .App {
   text-align: center;
 }

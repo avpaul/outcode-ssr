@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 
 const TabHeader = styled.div``;
@@ -34,6 +34,15 @@ const TabHeaderButton = styled.button`
   &.tab-active {
     border: 1px solid #17223b;
   }
+  ${props =>
+    props.theme === "dark" &&
+    css`
+      background-color: transparent;
+      color: #ffffff;
+      &.tab-active {
+        border-color: #ffffff;
+      }
+    `}
 `;
 
 const ReloadBtn = styled.button`
@@ -58,9 +67,16 @@ const ReloadBtn = styled.button`
     color: #ffffff;
     background-color: #17223b;
   }
+  ${props =>
+    props.theme === "dark" &&
+    css`
+      background-color: transparent;
+      color: #ffffff;
+      border-color: #ffffff;
+    `}
 `;
 
-const TabContainer = ({ tabs, tabContent }) => {
+const TabContainer = ({ tabs, tabContent, theme }) => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const renderTabHeadings = tabHeadings => {
     return tabHeadings.map(heading => (
@@ -71,6 +87,7 @@ const TabContainer = ({ tabs, tabContent }) => {
           setActiveTab(heading);
         }}
         className={activeTab === heading ? "tab-active" : ""}
+        theme={theme}
       >
         {heading}
       </TabHeaderButton>
@@ -88,7 +105,7 @@ const TabContainer = ({ tabs, tabContent }) => {
           padding: 8
         }}
       >
-        <ReloadBtn>
+        <ReloadBtn theme={theme}>
           <i className="zmdi zmdi-replay" />
           &nbsp; load more
         </ReloadBtn>

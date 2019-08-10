@@ -53,4 +53,22 @@
       }
     }
   }
+  &.theme-dark {
+    border-bottom-color: #ffffff;
+    .tab-title {
+      color: #ffffff;
+      text-decoration-color: #66d9ef;
+    }
+    .btn-edit {
+      color: #ffffff;
+      border-color: #ffffff;
+      &:hover {
+        color: #17223b;
+        background-color: #ffffff;
+      }
+    }
+    .btn-delete {
+      background-color: transparent;
+    }
+  }
 }

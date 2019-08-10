@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Container = styled.div`
   position: relative;
@@ -12,11 +12,21 @@ const Container = styled.div`
     font-size: 32px;
     font-weight: 700;
     color: #17223b;
+    ${props =>
+      props.theme === "dark" &&
+      css`
+        color: #ffffff;
+      `}
   }
   .article-description {
     font-size: 24px;
     font-weight: 200;
     color: #6b778d;
+    ${props =>
+      props.theme === "dark" &&
+      css`
+        color: #ffffff;
+      `}
   }
 `;
 
@@ -51,19 +61,28 @@ const ReadMoreButton = styled.button`
   }
   &:hover {
     color: #17223b;
-    // background-color: #6b778d;
   }
+  ${props =>
+    props.theme === "dark" &&
+    css`
+      color: #ffffff;
+      background-color: transparent;
+      border: 1px solid #ffffff;
+      &:hover {
+        color: #ffffff;
+      }
+    `}
 `;
 
-const ArticleView = ({ article }) => {
+const ArticleView = ({ article, theme }) => {
   return (
-    <Container>
+    <Container theme={theme}>
       <ImgContainer>
         <Image src={article.image} />
       </ImgContainer>
       <h2 className="article-title">{article.title}</h2>
       <p className="article-description">{article.description}</p>
-      <ReadMoreButton>
+      <ReadMoreButton theme={theme}>
         read more&nbsp;&nbsp;
         <i className="zmdi zmdi-long-arrow-right" />
       </ReadMoreButton>

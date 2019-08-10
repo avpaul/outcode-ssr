@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import Search from "./search";
+import styled, { css } from "styled-components";
+import { subscriber, themeUpdateService } from "../services/themeService";
 
 const Nav = styled.nav`
   position: relative;
@@ -18,6 +18,11 @@ const Nav = styled.nav`
     font-size: 38px;
     text-decoration: none;
     color: #17223b;
+    ${props =>
+      props.theme === "dark" &&
+      css`
+        color: #ffffff;
+      `}
   }
   .nav-tag {
     font-size: 20px;
@@ -45,16 +50,22 @@ const Nav = styled.nav`
       border-radius: 50%;
     }
   }
+  ${props =>
+    props.theme === "dark" &&
+    css`
+      border-bottom-color: #ffffff;
+    `}
 `;
 
-const SearchBtn = styled.button`
+const ThemeButton = styled.button`
   height: 36px;
   width: 36px;
   font-size: 24px;
   background-color: #17223b;
-  color: #ffffff;
+  color: #f9a602;
   border: none;
   border-radius: 50%;
+  cursor: pointer;
   &:focus {
     outline: none;
   }
@@ -64,10 +75,16 @@ const SearchBtn = styled.button`
 `;
 
 const Navbar = () => {
-  const [isSearchActive, setSearchActive] = useState(false);
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    subscriber.subscribe(value => {
+      setTheme(value);
+    });
+  }, []);
 
   return (
-    <Nav>
+    <Nav theme={theme}>
       <Link className="nav-logo" to="/">
         outcode&nbsp;
         <span className="nav-tag">by paul</span>
@@ -80,20 +97,21 @@ const Navbar = () => {
         <a href="https://github.com/avpaul">
           <i className="zmdi zmdi-github" />
         </a>
-        <SearchBtn
-          onClick={() => {
-            setSearchActive(true);
+
+        <ThemeButton
+          onClick={evt => {
+            evt.preventDefault();
+            if (theme === "light") {
+              themeUpdateService.set("dark");
+            } else themeUpdateService.set("light");
           }}
         >
-          <i className="zmdi zmdi-search" />
-        </SearchBtn>
-        {isSearchActive && (
-          <Search
-            closeSearch={() => {
-              setSearchActive(false);
-            }}
-          />
-        )}
+          {theme === "light" ? (
+            <i className="zmdi zmdi-brightness-2" />
+          ) : (
+            <i className="zmdi zmdi-brightness-7" />
+          )}
+        </ThemeButton>
       </div>
     </Nav>
   );

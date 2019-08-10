@@ -54,4 +54,10 @@
       }
     }
   }
+  &.theme-dark {
+    input {
+      background-color: transparent;
+      color: #ffffff;
+    }
+  }
 }
