@@ -5,7 +5,11 @@ import "./article.scss";
 const Article = ({ content, tags = [] }) => {
   const body = ReactHTMLParser(content);
   const renderTags = () =>
-    tags.map(tag => <div className="article-tag">{tag}</div>);
+    tags.map(tag => (
+      <div className="article-tag" key={tag}>
+        {tag}
+      </div>
+    ));
   return (
     <Fragment>
       <div className="article--container">{body}</div>

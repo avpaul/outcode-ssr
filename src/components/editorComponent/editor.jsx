@@ -1,10 +1,13 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useRef, Fragment, useEffect } from "react";
 import styled from "styled-components";
 import convertMarkdown from "../../helpers/markdownConverter";
-import saveArticle from "../../actions/editor";
+import saveArticle from "../../api/editor";
 import Article from "../articleComponent/article";
 import Chips from "../chips/chips";
 import upLoader from "../../helpers/imageUploader";
+import { getTitle, getDescription } from "../../helpers/getArticleParts";
+import { subscriber } from "../../services/updateArticleService";
+import { getArticle } from "../../api/article.js";
 import "./editor.scss";
 
 const Container = styled.div`
@@ -13,21 +16,41 @@ const Container = styled.div`
   min-height: 650px;
 `;
 
-const Editor = () => {
+const Editor = ({ history }) => {
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState({});
   const [contentHTML, setContentHTML] = useState("<p>Tell your story...</p>");
+  const [title, setTitle] = useState("");
+  const [status, setStatus] = useState("draft");
+  const [slug, setSlug] = useState(null);
+  const [description, setDescription] = useState("");
+  const [featuredImage, setFeaturedImage] = useState(null);
   const [chips, setChips] = useState([]);
   const [preview, setPreview] = useState(false);
   const [imageUploaded, setImageUploaded] = useState(false);
   const imageInput = useRef(null);
   const markdownInput = useRef(null);
 
+  useEffect(() => {
+    subscriber.subscribe(slug => {
+      slug &&
+        getArticle(slug)
+          .then(({ data: article }) => {
+            setContent(article.content);
+            setChips(article.tags);
+            setSlug(article.slug);
+            setStatus(article.status);
+          })
+          .catch(error => {});
+    });
+  }, []);
+
   const uploadImage = async evt => {
     evt.preventDefault();
     const file = evt.target.files[0];
     try {
       const { default: imageURL } = await upLoader(file);
+      setFeaturedImage(imageURL);
       return imageURL;
     } catch (error) {
       setErrors({ image: "image upload failed", ...errors });
@@ -37,13 +60,46 @@ const Editor = () => {
   const onChange = evt => {
     setContentHTML(convertMarkdown(evt.target.value));
     setContent(evt.target.value);
-    saveArticle({ content, tags: chips });
+    setTitle(getTitle(contentHTML));
+    setDescription(getDescription(contentHTML));
+    if (title.length !== 0) {
+      saveArticle({
+        content,
+        tags: chips,
+        title,
+        description,
+        featuredImage,
+        status,
+        slug
+      })
+        .then(({ data: article }) => {
+          setSlug(article.slug);
+          setStatus(article.status);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   };
-  // const onChange = evt => {
-  //   setContentHTML(convertMarkdown(markdownInput.current.innerText));
-  //   setContent(markdownInput.current.innerText);
-  //   saveArticle({ content, tags: chips });
-  // };
+
+  const onPublish = () => {
+    setStatus("published");
+    saveArticle({
+      content,
+      tags: chips,
+      title,
+      description,
+      featuredImage,
+      status: "published",
+      slug
+    })
+      .then(({ data: article }) => {
+        history.push(`/${article.slug}`);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   return (
     <Container>
@@ -73,6 +129,7 @@ const Editor = () => {
         >
           <i className="zmdi zmdi-image" />
         </button>
+
         <input
           type="file"
           name="image"
@@ -89,17 +146,16 @@ const Editor = () => {
             })
           }
         />
+        <button
+          className="btn-publish"
+          disabled={slug === null ? true : false}
+          onClick={onPublish}
+        >
+          <i className="zmdi zmdi-file-text" />
+        </button>
       </div>
       {!preview ? (
         <Fragment>
-          {/* <ContentEditable
-            className="article-editor--container"
-            placeholder="Tell your story..."
-            html={content}
-            innerRef={markdownInput}
-            onChange={onChange}
-            tagName="textarea"
-          /> */}
           <textarea
             className="article-editor--container"
             placeholder="Tell your story..."
