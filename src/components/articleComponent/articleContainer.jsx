@@ -5,6 +5,7 @@ import Article from "./article";
 import { getArticle } from "../../api/article";
 import convertFromMarkdown from "../../helpers/markdownConverter";
 import { subscriber } from "../../services/themeService";
+import NotFoundPage from "../notFoundComponent/notFound";
 
 const ArticleInfo = styled.div`
   padding-top: 16px;
@@ -29,20 +30,24 @@ const Wrapper = styled.div`
 const ArticleContainer = ({ match }) => {
   const [article, setArticle] = useState({ content: "", tags: [] });
   const [theme, setTheme] = useState("light");
+  const [isSlug, setIsSlug] = useState(true);
 
   useEffect(() => {
     const { slug } = match.params;
+    if (!slug.split("-", 2)[1]) setIsSlug(false);
     getArticle(slug)
       .then(({ data }) => {
         setArticle(data);
       })
-      .catch(error => {});
+      .catch(error => {
+        setIsSlug(false);
+      });
     subscriber.subscribe(value => {
       setTheme(value);
     });
   }, [match.params]);
 
-  return (
+  return isSlug ? (
     <Wrapper>
       <Article
         content={convertFromMarkdown(article.content)}
@@ -63,6 +68,8 @@ const ArticleContainer = ({ match }) => {
         &nbsp; back home
       </Link>
     </Wrapper>
+  ) : (
+    <NotFoundPage />
   );
 };
 
