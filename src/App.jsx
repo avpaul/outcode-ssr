@@ -10,6 +10,7 @@ import Footer from "./components/footer";
 import article from "./components/articleComponent/articleContainer";
 import UserArticles from "./components/userArticlesComponent/userArticle";
 import Login from "./components/loginComponent/login";
+import NotFound from "./components/notFoundComponent/notFound";
 import "./App.scss";
 
 const AppContainerWrapper = styled.div`
@@ -57,6 +58,7 @@ const App = () => {
             />
             <Route exact path="/login" component={Login} />
             <Route exact path="/:slug" component={article} />
+            <Route path="/notfound" component={NotFound} />
           </Switch>
           <Footer />
         </AppContainer>
