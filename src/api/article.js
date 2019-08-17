@@ -14,11 +14,15 @@ const getMainArticles = async ({ page = 0, limit = 6 }) => {
 
 const getPublishedArticles = async ({ page = 0, limit = 6 }) => {
   try {
+    const token = localStorage.getItem("token");
     const { data } = await axios.get(
       `${
         process.env.REACT_APP_API_URL
       }/articles/published?page=${page}&limit=${limit}`,
-      {}
+      {
+        headers: { authorization: `Bearer ${token}` },
+        "Content-Type": "application/json"
+      }
     );
     return data;
   } catch (error) {
@@ -28,11 +32,15 @@ const getPublishedArticles = async ({ page = 0, limit = 6 }) => {
 
 const getDraftArticles = async ({ page = 0, limit = 6 }) => {
   try {
+    const token = localStorage.getItem("token");
     const { data } = await axios.get(
       `${
         process.env.REACT_APP_API_URL
       }/articles/drafts?page=${page}&limit=${limit}`,
-      {}
+      {
+        headers: { authorization: `Bearer ${token}` },
+        "Content-Type": "application/json"
+      }
     );
     return data;
   } catch (error) {

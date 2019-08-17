@@ -23,6 +23,11 @@ const Nav = styled.nav`
       css`
         color: #ffffff;
       `}
+
+    @media only screen and (max-width: 768px) {
+      font-size: 32px;
+      min-width: 200px;
+    }
   }
   .nav-tag {
     font-size: 20px;
@@ -48,6 +53,11 @@ const Nav = styled.nav`
       color: #ffffff;
       border: none;
       border-radius: 50%;
+      @media only screen and (max-width: 768px) {
+        height: 32px;
+        width: 32px;
+        font-size: 20px;
+      }
     }
   }
   ${props =>
@@ -55,6 +65,13 @@ const Nav = styled.nav`
     css`
       border-bottom-color: #ffffff;
     `}
+  @media only screen and (max-width: 768px) {
+    height: 64px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 `;
 
 const ThemeButton = styled.button`
@@ -71,6 +88,11 @@ const ThemeButton = styled.button`
   }
   &:active {
     outline: false;
+  }
+  @media only screen and (max-width: 768px) {
+    height: 32px;
+    width: 32px;
+    font-size: 20px;
   }
 `;
 

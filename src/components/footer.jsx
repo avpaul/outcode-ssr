@@ -13,6 +13,14 @@ const Footer = styled.footer`
   .footer-spacer {
     flex-basis: 100%;
   }
+  @media only screen and (max-width: 768px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    .footer-spacer {
+      margin: 8px 0;
+    }
+  }
 `;
 
 const Navbar = () => {

@@ -69,7 +69,7 @@ const Editor = ({ history }) => {
     setDescription(getDescription(contentHTML));
     if (title.length !== 0) {
       saveArticle({
-        content,
+        content: evt.target.value,
         tags: chips,
         title,
         description,
