@@ -11,6 +11,7 @@ import article from "./components/articleComponent/articleContainer";
 import UserArticles from "./components/userArticlesComponent/userArticle";
 import Login from "./components/loginComponent/login";
 import NotFound from "./components/notFoundComponent/notFound";
+import Analytics from "./components/analyticsComponent/analytics";
 import "./App.scss";
 
 const AppContainerWrapper = styled.div`
@@ -32,6 +33,10 @@ const AppContainer = styled.div`
     width: 70%;
     margin: 0 auto;
   }
+  @media (min-width: 1441px) {
+    width: 55%;
+    margin: 0 auto;
+  }
 `;
 
 const App = () => {
@@ -42,11 +47,11 @@ const App = () => {
       setTheme(value);
     });
   }, []);
-
   return (
     <Router>
       <AppContainerWrapper theme={theme}>
         <AppContainer>
+          <Route component={Analytics} />
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />

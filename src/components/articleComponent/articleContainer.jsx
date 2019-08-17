@@ -21,10 +21,17 @@ const ArticleInfo = styled.div`
         color: #ffffff;
       `}
   }
+  a {
+    color: inherit;
+  }
 `;
 const Wrapper = styled.div`
   margin-top: 36px;
   margin-bottom: 16px;
+  @media only screen and (max-width: 768px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 `;
 
 const ArticleContainer = ({ match }) => {
@@ -56,7 +63,10 @@ const ArticleContainer = ({ match }) => {
       />
       <ArticleInfo theme={theme}>
         <p>
-          Written by <strong>{article.author}</strong>
+          Written by&nbsp;
+          <Link to="/">
+            <strong>{article.author}</strong>
+          </Link>
         </p>
         <p>Published on {new Date(article.updatedAt).toDateString()}</p>
       </ArticleInfo>

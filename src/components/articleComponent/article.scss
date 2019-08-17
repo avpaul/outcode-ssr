@@ -29,12 +29,21 @@ $medium-and-up: 768px;
     font-weight: 700;
     color: #17223b;
     font-family: "Avenir";
+    @media only screen and (max-width: 768px) {
+      font-size: 32px;
+    }
   }
   h2 {
     font-size: 28px;
+    @media only screen and (max-width: 768px) {
+      font-size: 26px;
+    }
   }
   h3 {
     font-size: 24px;
+    @media only screen and (max-width: 768px) {
+      font-size: 22px;
+    }
   }
 
   p,
@@ -53,6 +62,9 @@ $medium-and-up: 768px;
   h1 + p {
     margin-top: -16px;
     padding-top: 0;
+    @media only screen and (max-width: 768px) {
+      margin-top: 16px;
+    }
   }
   h2 + p,
   h3 + p {
@@ -65,6 +77,10 @@ $medium-and-up: 768px;
     background-color: #17223b;
     border-radius: 2px;
     overflow-y: auto;
+    @media only screen and (max-width: 768px) {
+      width: 100%;
+      padding: 16px;
+    }
   }
   code:not([class]) {
     padding: 0 8px;
@@ -87,10 +103,15 @@ $medium-and-up: 768px;
     p {
       font-style: italic;
     }
+    @media only screen and (max-width: 768px) {
+      width: 100%;
+      padding: 16px;
+    }
   }
   a {
     color: #17223b;
-    text-decoration-color: #66d9ef;
+    text-decoration: none;
+    border-bottom: 2px solid #66d9ef;
   }
   ul,
   ol {
@@ -111,9 +132,10 @@ $medium-and-up: 768px;
     a {
       color: #a6e22e;
       text-decoration-color: #66d9ef;
+      // border-bottom-color: #a6e22e
     }
     pre {
-      background-color: #3b3c36;
+      background-color: #31312d;
     }
     code:not([class]) {
       background-color: darken(#f6f8fa, 45%);
@@ -121,6 +143,10 @@ $medium-and-up: 768px;
     blockquote {
       background-color: darken(#f6f8fa, 45%);
     }
+  }
+  @media only screen and (max-width: 768px) {
+    padding-left: 8px;
+    padding-right: 8px;
   }
 }
 
