@@ -138,7 +138,12 @@ const Home = () => {
         }}
       >
         {(articles || loading) && (
-          <ReloadBtn theme={theme} onClick={loadMore} type="button">
+          <ReloadBtn
+            theme={theme}
+            onClick={loadMore}
+            type="button"
+            title="Load More Articles"
+          >
             <i className="zmdi zmdi-replay" />
             &nbsp; load more
           </ReloadBtn>

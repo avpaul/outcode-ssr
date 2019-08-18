@@ -118,6 +118,7 @@ const Editor = ({ history }) => {
       </div>
       <div className="editor-actions">
         <button
+          title="Preview Article"
           className={`btn-editor-preview ${
             theme === "dark" ? "theme-dark" : ""
           }`}
@@ -128,6 +129,7 @@ const Editor = ({ history }) => {
           <i className={`zmdi zmdi-${!preview ? "eye" : "edit"}`} />
         </button>
         <button
+          title="Add Image"
           className={`btn-editor-upload ${
             theme === "dark" ? "theme-dark" : ""
           }`}
@@ -156,6 +158,7 @@ const Editor = ({ history }) => {
           }
         />
         <button
+          title="Publish Article"
           className={`btn-publish ${theme === "dark" ? "theme-dark" : ""}`}
           disabled={slug === null ? true : false}
           onClick={onPublish}

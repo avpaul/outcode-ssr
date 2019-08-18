@@ -113,14 +113,15 @@ const Navbar = () => {
       </Link>
       <div className="nav-spacer" />
       <div className="menu-wrapper">
-        <a href="https://twitter.com/av_depaul">
+        <a href="https://twitter.com/av_depaul" title="Follow Me On Twitter">
           <i className="zmdi zmdi-twitter" />
         </a>
-        <a href="https://github.com/avpaul">
+        <a href="https://github.com/avpaul" title="Check My Github">
           <i className="zmdi zmdi-github" />
         </a>
 
         <ThemeButton
+          title={`Change To ${theme === "light" ? "Dark" : "Light"} Mode`}
           onClick={evt => {
             evt.preventDefault();
             if (theme === "light") {

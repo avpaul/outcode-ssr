@@ -99,7 +99,11 @@ const SummaryBio = ({ theme }) => {
         <ProfileImage>
           <img src={profileImage} alt="av paul" />
         </ProfileImage>
-        <SendEmailButton theme={theme} href="mailto:vincent.abimana@gmail.com">
+        <SendEmailButton
+          title="Send Me An Email!"
+          theme={theme}
+          href="mailto:vincent.abimana@gmail.com"
+        >
           Got a cool project?
         </SendEmailButton>
       </div>

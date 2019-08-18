@@ -47,6 +47,7 @@ const Button = ({ theme, onSubmit }) => {
   const renderSubmitButton = () => {
     return (
       <button
+        title="Login"
         type="button"
         className="login-button__btn"
         onClick={evt => {

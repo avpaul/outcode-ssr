@@ -60,6 +60,7 @@ const UserArticles = () => {
               <h2 className="tab-title">{article.title}</h2>
               <div className="list-actions">
                 <button
+                  title="Delete This Article"
                   className="btn-delete"
                   onClick={() => {
                     deleteArticle(article.slug)
@@ -75,6 +76,7 @@ const UserArticles = () => {
                   <i className="zmdi zmdi-delete" />
                 </button>
                 <Link
+                  title="Read This Article"
                   to="/editor"
                   className="btn-edit"
                   onClick={evt => {
@@ -88,7 +90,7 @@ const UserArticles = () => {
           ))
         ) : (
           <NoArticlesBanner>
-            <Link to="/editor">
+            <Link title="Write A New Article" to="/editor">
               <i className="zmdi zmdi-file-plus" />
               &nbsp;Add a new draft
             </Link>
@@ -106,11 +108,16 @@ const UserArticles = () => {
               className={`list-item ${theme === "dark" ? "theme-dark" : ""}`}
               key={article.slug}
             >
-              <Link to={`/${article.slug}`} className="tab-title">
+              <Link
+                title="Read This Article"
+                to={`/${article.slug}`}
+                className="tab-title"
+              >
                 {article.title}
               </Link>
               <div className="list-actions">
                 <button
+                  title="Delete This Article"
                   className="btn-delete"
                   onClick={() => {
                     deleteArticle(article.slug)
@@ -126,6 +133,7 @@ const UserArticles = () => {
                   <i className="zmdi zmdi-delete" />
                 </button>
                 <Link
+                  title="Update This Article"
                   to="/editor"
                   className="btn-edit"
                   onClick={() => {

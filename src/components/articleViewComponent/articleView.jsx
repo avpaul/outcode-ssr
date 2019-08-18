@@ -37,7 +37,11 @@ const ArticleView = ({ bgColor, article }) => {
         {article.title}
       </Link>
       <p className="article-description">{article.description}</p>
-      <Link to={`/${article.slug}`} className="btn-read-article">
+      <Link
+        to={`/${article.slug}`}
+        className="btn-read-article"
+        title="Read The Article"
+      >
         read more&nbsp;&nbsp;
         <i className="zmdi zmdi-long-arrow-right" />
       </Link>
