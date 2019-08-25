@@ -73,7 +73,7 @@ const Heading = styled.h1`
 const Home = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [theme, seTheme] = useState("light");
+  const [theme, seTheme] = useState(subscriber.value);
   const [page, setPage] = useState(0);
 
   const colors = [

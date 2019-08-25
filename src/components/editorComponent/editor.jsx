@@ -29,7 +29,7 @@ const Editor = ({ history }) => {
   const [chips, setChips] = useState([]);
   const [preview, setPreview] = useState(false);
   const [imageUploaded, setImageUploaded] = useState(false);
-  const [theme, seTheme] = useState("light");
+  const [theme, seTheme] = useState(themeSubscriber.value);
   const imageInput = useRef(null);
   const markdownInput = useRef(null);
 
@@ -48,7 +48,7 @@ const Editor = ({ history }) => {
     themeSubscriber.subscribe(value => {
       seTheme(value);
     });
-  }, []);
+  }, [slug]);
 
   const uploadImage = async evt => {
     evt.preventDefault();

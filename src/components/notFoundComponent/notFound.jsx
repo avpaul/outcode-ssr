@@ -35,12 +35,12 @@ const Caption = styled.div`
 `;
 
 const NotFoundPage = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(subscriber.value);
   useEffect(() => {
     subscriber.subscribe(value => {
       setTheme(value);
     });
-  }, []);
+  });
 
   return (
     <Wrapper>

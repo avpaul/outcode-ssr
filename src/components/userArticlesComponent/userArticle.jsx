@@ -30,7 +30,7 @@ const NoArticlesBanner = styled.div`
 const UserArticles = () => {
   const [publishedArticles, setPublishedArticles] = useState([]);
   const [draftArticles, setDraftArticles] = useState([]);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(themeSubscriber.value);
 
   useEffect(() => {
     getPublishedArticles({ page: 0, limit: 6 })

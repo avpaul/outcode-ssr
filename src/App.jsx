@@ -7,11 +7,12 @@ import Home from "./components/home";
 import Editor from "./components/editorComponent/editor";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
-import article from "./components/articleComponent/articleContainer";
+import article from "./components/articleComponent";
 import UserArticles from "./components/userArticlesComponent/userArticle";
 import Login from "./components/loginComponent/login";
 import NotFound from "./components/notFoundComponent/notFound";
 import Analytics from "./components/analyticsComponent/analytics";
+
 import "./App.scss";
 
 const AppContainerWrapper = styled.div`
@@ -40,7 +41,7 @@ const AppContainer = styled.div`
 `;
 
 const App = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(subscriber.value);
 
   useEffect(() => {
     subscriber.subscribe(value => {

@@ -36,23 +36,29 @@ const Wrapper = styled.div`
 
 const ArticleContainer = ({ match }) => {
   const [article, setArticle] = useState({ content: "", tags: [] });
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(subscriber.value);
   const [isSlug, setIsSlug] = useState(true);
 
   useEffect(() => {
-    const { slug } = match.params;
-    if (!slug.split("-", 2)[1]) setIsSlug(false);
-    getArticle(slug)
-      .then(({ data }) => {
-        setArticle(data);
-      })
-      .catch(error => {
-        setIsSlug(false);
+    let abort = false;
+    const slug = match.params.slug;
+    if (!slug.split("-", 2)[1]) {
+      abort = true;
+      setIsSlug(false);
+    }
+    if (!abort) {
+      getArticle(slug)
+        .then(({ data }) => {
+          setArticle(data);
+        })
+        .catch(error => {
+          setIsSlug(false);
+        });
+      subscriber.subscribe(value => {
+        setTheme(value);
       });
-    subscriber.subscribe(value => {
-      setTheme(value);
-    });
-  }, [match.params]);
+    }
+  }, [match.params.slug]);
 
   return isSlug ? (
     <Wrapper>
