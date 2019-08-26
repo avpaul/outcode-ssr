@@ -61,10 +61,15 @@ const getArticle = async slug => {
 };
 
 const deleteArticle = async slug => {
+  const token = localStorage.getItem("token");
+
   try {
     const { data } = await axios.delete(
       `${process.env.REACT_APP_API_URL}/articles/${slug}`,
-      {}
+      {
+        headers: { authorization: `Bearer ${token}` },
+        "Content-Type": "application/json"
+      }
     );
     return data;
   } catch (error) {

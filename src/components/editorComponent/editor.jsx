@@ -42,6 +42,7 @@ const Editor = ({ history }) => {
             setChips(article.tags);
             setSlug(article.slug);
             setStatus(article.status);
+            setContentHTML(convertMarkdown(article.content));
           })
           .catch(error => {});
     });

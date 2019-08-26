@@ -8,7 +8,7 @@ import debounce from "../helpers/debounce";
 const saveArticle = data =>
   new Promise(async (resolve, reject) => {
     const { slug, featuredImage, description, title } = data;
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token"); 
 
     const method = slug === null ? "post" : "put";
     const uri = slug === null ? "/articles" : `/articles/${slug}`;
