@@ -102,7 +102,7 @@ const SummaryBio = ({ theme }) => {
         <SendEmailButton
           title="Send Me An Email!"
           theme={theme}
-          href="mailto:vincent.abimana@gmail.com"
+          href="mailto:paul@outcode.dev"
         >
           Got a cool project?
         </SendEmailButton>

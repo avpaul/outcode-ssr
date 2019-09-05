@@ -40,6 +40,13 @@ const ArticleContainer = ({ match }) => {
   const [isSlug, setIsSlug] = useState(true);
 
   useEffect(() => {
+    document.title = article.title;
+    return () => {
+      document.title = "Outcode by Paul";
+    };
+  }, [article.title]);
+
+  useEffect(() => {
     let abort = false;
     const slug = match.params.slug;
     if (!slug.split("-", 2)[1]) {

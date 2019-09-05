@@ -42,6 +42,9 @@ const TabHeaderButton = styled.button`
       &.tab-active {
         border-color: #ffffff;
       }
+      &:hover {
+        background-color: #202124;
+      }
     `}
 `;
 

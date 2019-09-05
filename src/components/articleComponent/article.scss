@@ -12,10 +12,10 @@ $medium-and-up: 768px;
     z-index: 100;
   }
   img {
+    display: block;
     height: 192px;
-    width: 100%;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    width: 90%;
+    margin: 16px auto;
     @media (min-width: $medium-and-up) {
       height: 500px;
     }
@@ -114,6 +114,7 @@ $medium-and-up: 768px;
   ul,
   ol {
     margin-left: 24px;
+    padding: 8px 0 16px 0;
   }
   &.theme-dark {
     h1,
@@ -135,10 +136,10 @@ $medium-and-up: 768px;
       background-color: #343e3d;
     }
     code:not([class]) {
-      background-color: #7fa39d;
+      background-color: #6c8087;
     }
     blockquote {
-      background-color: #7fa39d;
+      background-color: #6c8087;
     }
   }
   @media only screen and (max-width: 768px) {
@@ -173,9 +174,15 @@ $medium-and-up: 768px;
   &.theme-dark {
     color: #ffffff;
     border-color: #ffffff;
+    &:hover {
+      background-color: #202124;
+    }
   }
   &.page-not-found {
   }
+}
+.article-tags {
+  margin-top: 36px;
 }
 .article-tag {
   display: inline-block;

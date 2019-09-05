@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import "./article.scss";
 
 const Article = ({ content, tags = [], theme }) => {
@@ -11,13 +11,13 @@ const Article = ({ content, tags = [], theme }) => {
       </div>
     ));
   return (
-    <Fragment>
+    <>
       <div
         className={`article--container theme-${theme}`}
         dangerouslySetInnerHTML={{ __html: content }}
       />
-      {tags.length > 0 && renderTags()}
-    </Fragment>
+      <div className="article-tags">{tags.length > 0 && renderTags()}</div>
+    </>
   );
 };
 

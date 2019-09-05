@@ -34,6 +34,13 @@ const Editor = ({ history }) => {
   const markdownInput = useRef(null);
 
   useEffect(() => {
+    document.title = title ? title : "Start writing ✍️";
+    return () => {
+      document.title = "Outcode by Paul";
+    };
+  }, [title]);
+
+  useEffect(() => {
     subscriber.subscribe(slug => {
       slug &&
         getArticle(slug)
@@ -42,6 +49,7 @@ const Editor = ({ history }) => {
             setChips(article.tags);
             setSlug(article.slug);
             setStatus(article.status);
+            setTitle(article.title);
             setContentHTML(convertMarkdown(article.content));
           })
           .catch(error => {});
@@ -49,7 +57,7 @@ const Editor = ({ history }) => {
     themeSubscriber.subscribe(value => {
       seTheme(value);
     });
-  }, [slug]);
+  }, []);
 
   const uploadImage = async evt => {
     evt.preventDefault();

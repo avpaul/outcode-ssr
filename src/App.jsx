@@ -23,7 +23,7 @@ const AppContainerWrapper = styled.div`
   ${props =>
     props.theme === "dark" &&
     css`
-      background-color: #17223b;
+      background-color: #202124;
     `}
 `;
 

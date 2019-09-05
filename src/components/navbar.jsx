@@ -58,6 +58,14 @@ const Nav = styled.nav`
         width: 32px;
         font-size: 20px;
       }
+      .zmdi {
+        line-height: 36px;
+      }
+      ${props =>
+        props.theme === "dark" &&
+        css`
+          background-color: #202124;
+        `}
     }
   }
   ${props =>
@@ -77,7 +85,7 @@ const Nav = styled.nav`
 const ThemeButton = styled.button`
   height: 36px;
   width: 36px;
-  font-size: 24px;
+  font-size: 22px;
   background-color: #17223b;
   color: #f9a602;
   border: none;
@@ -94,10 +102,18 @@ const ThemeButton = styled.button`
     width: 32px;
     font-size: 20px;
   }
+  .zmdi {
+    line-height: 36px;
+  }
+  ${props =>
+    props.theme === "dark" &&
+    css`
+      background-color: #202124;
+    `}
 `;
 
 const Navbar = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(subscriber.value);
 
   useEffect(() => {
     subscriber.subscribe(value => {
@@ -122,6 +138,7 @@ const Navbar = () => {
 
         <ThemeButton
           title={`Change To ${theme === "light" ? "Dark" : "Light"} Mode`}
+          theme={theme}
           onClick={evt => {
             evt.preventDefault();
             if (theme === "light") {
