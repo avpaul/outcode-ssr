@@ -11,9 +11,8 @@ const upLoader = file =>
         headers: { "content-type": "multipart/form-data" }
       })
       .then(response => {
-        const { url } = response.data;
-        const formatedURL = url.search(/\/$/g) >= 0 ? url.slice(0, -1) : url;
-        resolve({ default: formatedURL });
+        const { secure_url: url } = response.data;
+        resolve({ default: url });
       })
       .catch(error => reject(error || "Couldn't upload the image"));
   });

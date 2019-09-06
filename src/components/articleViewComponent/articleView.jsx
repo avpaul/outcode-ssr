@@ -22,6 +22,7 @@ const Container = styled.div`
   .article-description {
     font-size: 24px;
     font-weight: 200;
+    overflow-wrap: break-word;
   }
   @media only screen and (max-width: 768px) {
     width: 100%;

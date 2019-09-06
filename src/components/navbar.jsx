@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { subscriber, themeUpdateService } from "../services/themeService";
+import updateSubject from "../services/updateService";
 
 const Nav = styled.nav`
   position: relative;
@@ -112,13 +113,71 @@ const ThemeButton = styled.button`
     `}
 `;
 
+const UpdateButton = styled.div`
+  position: absolute;
+  bottom: -46px;
+  right: 0;
+  height: 44px;
+  width: 325px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 200;
+  background-color: #17223b;
+  color: #ffffff;
+  border-radius: 2px;
+  z-index: 2000;
+  box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+
+  .btn {
+    height: 36px;
+    min-width: 24px;
+    margin: 0 8px;
+    font-size: 14px;
+    font-family: "Avenir";
+    background-color: transparent;
+    color: #f9a602;
+    border: none;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+    &:active {
+      outline: false;
+    }
+    @media only screen and (max-width: 768px) {
+      height: 32px;
+      width: 32px;
+      font-size: 20px;
+    }
+    &:last-of-type {
+      color: #ffffff;
+    }
+  }
+  ${props =>
+    props.theme === "dark" &&
+    css`
+      background-color: #343e3d;
+    `}
+`;
+
 const Navbar = () => {
   const [theme, setTheme] = useState(subscriber.value);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
 
   useEffect(() => {
     subscriber.subscribe(value => {
       setTheme(value);
     });
+    updateSubject.subscribe(data => {
+      if (data.type === "REQUEST_UPDATE_PERMISSION") setUpdateAvailable(true);
+    });
+    return () => {
+      if (!updateSubject.closed) updateSubject.complete();
+    };
   }, []);
 
   return (
@@ -153,6 +212,36 @@ const Navbar = () => {
           )}
         </ThemeButton>
       </div>
+
+      {updateAvailable && (
+        <UpdateButton theme={theme}>
+          <p>Outcode update available!</p>
+          <button
+            className="btn"
+            type="button"
+            title="Refresh to use the new version"
+            onClick={evt => {
+              evt.preventDefault();
+              setUpdateAvailable(false);
+              updateSubject.next({ type: "UPDATE_PERMISSION_GRANTED" });
+            }}
+          >
+            REFRESH
+          </button>
+          <button
+            className="btn"
+            type="button"
+            title="Update later"
+            onClick={evt => {
+              evt.preventDefault();
+              setUpdateAvailable(false);
+              updateSubject.next({ type: "UPDATE_PERMISSION_DENIED" });
+            }}
+          >
+            &#10005;
+          </button>
+        </UpdateButton>
+      )}
     </Nav>
   );
 };

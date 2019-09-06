@@ -82,7 +82,7 @@ $medium-and-up: 768px;
     }
   }
   code:not([class]) {
-    padding: 0 8px;
+    padding: 0 4px;
     font-weight: 200;
     line-height: normal;
     background-color: darken(#f6f8fa, 5%);
@@ -107,10 +107,14 @@ $medium-and-up: 768px;
     }
   }
   a {
+    position: relative;
+    display: inline-block;
     color: #17223b;
     text-decoration: none;
     border-bottom: 2px solid #66d9ef;
+    line-height: 0.8;
   }
+
   ul,
   ol {
     margin-left: 24px;

@@ -1,5 +1,5 @@
 import React, { useState, useRef, Fragment, useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import convertMarkdown from "../../helpers/markdownConverter";
 import saveArticle from "../../api/editor";
 import Article from "../articleComponent/article";
@@ -17,6 +17,24 @@ const Container = styled.div`
   min-height: 650px;
 `;
 
+const EditStatus = styled.div`
+  padding: 8px 8px 4px;
+  margin-right: 4px;
+  margin-left: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 200;
+  font-family: "Avenir";
+  color: #17223b;
+  border-bottom: #17223b 1px solid;
+  ${props =>
+    props.theme === "dark" &&
+    css`
+      color: #ffffff;
+      border-bottom-color: #f9a602;
+    `}
+`;
+
 const Editor = ({ history }) => {
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState({});
@@ -30,6 +48,7 @@ const Editor = ({ history }) => {
   const [preview, setPreview] = useState(false);
   const [imageUploaded, setImageUploaded] = useState(false);
   const [theme, seTheme] = useState(themeSubscriber.value);
+  const [saveStatus, setSaveStatus] = useState(false);
   const imageInput = useRef(null);
   const markdownInput = useRef(null);
 
@@ -50,6 +69,7 @@ const Editor = ({ history }) => {
             setSlug(article.slug);
             setStatus(article.status);
             setTitle(article.title);
+            setDescription(article.description);
             setContentHTML(convertMarkdown(article.content));
           })
           .catch(error => {});
@@ -72,16 +92,22 @@ const Editor = ({ history }) => {
   };
 
   const onChange = evt => {
-    setContentHTML(convertMarkdown(evt.target.value));
+    setSaveStatus(false);
+    const HTMLContent = convertMarkdown(evt.target.value);
+    const newTitle = getTitle(HTMLContent);
+    const newDescription = getDescription(HTMLContent);
+
+    setContentHTML(HTMLContent);
     setContent(evt.target.value);
-    setTitle(getTitle(contentHTML));
-    setDescription(getDescription(contentHTML));
+    setTitle(newTitle);
+    setDescription(newDescription);
+
     if (title.length !== 0) {
       saveArticle({
         content: evt.target.value,
         tags: chips,
-        title,
-        description,
+        title: newTitle,
+        description: newDescription,
         featuredImage,
         status,
         slug
@@ -89,9 +115,12 @@ const Editor = ({ history }) => {
         .then(({ data: article }) => {
           setSlug(article.slug);
           setStatus(article.status);
+          setSaveStatus(true);
         })
         .catch(error => {
+          // if (process.env.REACT_APP_ENVIRONMENT === "development") {
           console.log(error);
+          // }
         });
     }
   };
@@ -115,17 +144,37 @@ const Editor = ({ history }) => {
       });
   };
 
+  const onUploadImage = evt => {
+    uploadImage(evt).then(url => {
+      setImageUploaded(true);
+      navigator.clipboard.writeText(url).then(
+        setTimeout(() => {
+          setImageUploaded(false);
+        }, 5000)
+      );
+    });
+  };
+
   return (
     <Container>
       <div className="editor-status">
         {imageUploaded && (
-          <div className="toast">
+          <div className={`toast ${theme === "dark" ? "theme-dark" : ""}`}>
             <i className="zmdi zmdi-check" />
             &nbsp; Image uploaded!
           </div>
         )}
+        {saveStatus ? (
+          <EditStatus theme={theme}>
+            <i className="zmdi zmdi-check"></i>&nbsp;Saved
+          </EditStatus>
+        ) : (
+          <EditStatus theme={theme}>
+            <i className="zmdi zmdi-edit"></i>&nbsp;Editing
+          </EditStatus>
+        )}
       </div>
-      <div className="editor-actions">
+      <div className="editor-actions" onScroll={() => {}}>
         <button
           title="Preview Article"
           className={`btn-editor-preview ${
@@ -155,21 +204,12 @@ const Editor = ({ history }) => {
           name="image"
           hidden
           ref={imageInput}
-          onChange={evt =>
-            uploadImage(evt).then(url => {
-              setImageUploaded(true);
-              navigator.clipboard.writeText(url).then(
-                setTimeout(() => {
-                  setImageUploaded(false);
-                }, 5000)
-              );
-            })
-          }
+          onChange={onUploadImage}
         />
         <button
           title="Publish Article"
           className={`btn-publish ${theme === "dark" ? "theme-dark" : ""}`}
-          disabled={slug === null ? true : false}
+          disabled={slug === null || status === "published" ? true : false}
           onClick={onPublish}
         >
           <i className="zmdi zmdi-file-text" />
