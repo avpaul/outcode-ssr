@@ -1,6 +1,6 @@
 import { BehaviorSubject } from "rxjs";
 
-/**
+/** 
  * check for theme value in local storage
  * if no theme in local storage add it and set the theme value to light
  */

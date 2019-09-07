@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { subscriber } from "./services/themeService";
-import WithToken from "./components/authHOC/withTokenCompoent";
+import WithToken from "./components/authHOC/withTokenComponent";
 import Home from "./components/home";
 import Editor from "./components/editorComponent/editor";
 import Navbar from "./components/navbar";

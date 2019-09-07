@@ -94,7 +94,7 @@ const Home = () => {
       .catch(error => {
         setArticles([]);
         setLoading(false);
-        console.log(error);
+        // TODO: display the error
       });
     subscriber.subscribe(value => {
       seTheme(value);

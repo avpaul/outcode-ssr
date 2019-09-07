@@ -5,6 +5,7 @@ import Article from "./article";
 import { getArticle } from "../../api/article";
 import convertFromMarkdown from "../../helpers/markdownConverter";
 import { subscriber } from "../../services/themeService";
+import Loader from "../loaderComponent/loader";
 import NotFoundPage from "../notFoundComponent/notFound";
 
 const ArticleInfo = styled.div`
@@ -25,9 +26,10 @@ const ArticleInfo = styled.div`
     color: inherit;
   }
 `;
+
 const Wrapper = styled.div`
-  margin-top: 36px;
-  margin-bottom: 16px;
+  width: 95%;
+  margin: 36px auto 16px;
   @media only screen and (max-width: 768px) {
     padding-left: 16px;
     padding-right: 16px;
@@ -38,13 +40,14 @@ const ArticleContainer = ({ match }) => {
   const [article, setArticle] = useState({ content: "", tags: [] });
   const [theme, setTheme] = useState(subscriber.value);
   const [isSlug, setIsSlug] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = article.title;
+    document.title = article.title || "Loading...";
     return () => {
       document.title = "Outcode by Paul";
     };
-  }, [article.title]);
+  }, [article]);
 
   useEffect(() => {
     let abort = false;
@@ -56,6 +59,7 @@ const ArticleContainer = ({ match }) => {
     if (!abort) {
       getArticle(slug)
         .then(({ data }) => {
+          setLoading(false);
           setArticle(data);
         })
         .catch(error => {
@@ -69,27 +73,33 @@ const ArticleContainer = ({ match }) => {
 
   return isSlug ? (
     <Wrapper>
-      <Article
-        content={convertFromMarkdown(article.content)}
-        tags={article.tags}
-        theme={theme}
-      />
-      <ArticleInfo theme={theme}>
-        <p>
-          Written by&nbsp;
-          <Link to="/">
-            <strong>{article.author}</strong>
-          </Link>
-        </p>
-        <p>Published on {new Date(article.updatedAt).toDateString()}</p>
-      </ArticleInfo>
-      <Link
-        to="/"
-        className={`btn--back-home ${theme === "dark" ? "theme-dark" : ""}`}
-      >
-        <i className="zmdi zmdi-long-arrow-left" />
-        &nbsp; back home
-      </Link>
+      {loading ? (
+        <Loader theme={theme} size="small" />
+      ) : (
+        <>
+          <Article
+            content={convertFromMarkdown(article.content)}
+            tags={article.tags}
+            theme={theme}
+          />
+          <ArticleInfo theme={theme}>
+            <p>
+              Written by&nbsp;
+              <Link to="/">
+                <strong>{article.author}</strong>
+              </Link>
+            </p>
+            <p>Published on {new Date(article.updatedAt).toDateString()}</p>
+          </ArticleInfo>
+          <Link
+            to="/"
+            className={`btn--back-home ${theme === "dark" ? "theme-dark" : ""}`}
+          >
+            <i className="zmdi zmdi-long-arrow-left" />
+            &nbsp; back home
+          </Link>{" "}
+        </>
+      )}
     </Wrapper>
   ) : (
     <NotFoundPage />
