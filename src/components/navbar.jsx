@@ -54,6 +54,9 @@ const Nav = styled.nav`
       color: #ffffff;
       border: none;
       border-radius: 50%;
+      &.btn-follow-twitter i {
+        color: #00acee;
+      }
       @media only screen and (max-width: 768px) {
         height: 32px;
         width: 32px;
@@ -188,10 +191,21 @@ const Navbar = () => {
       </Link>
       <div className="nav-spacer" />
       <div className="menu-wrapper">
-        <a href="https://twitter.com/av_depaul" title="Follow Me On Twitter">
+        <a
+          href="https://twitter.com/av_depaul"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Follow Me On Twitter"
+          className="btn-follow-twitter"
+        >
           <i className="zmdi zmdi-twitter" />
         </a>
-        <a href="https://github.com/avpaul" title="Check My Github">
+        <a
+          href="https://github.com/avpaul"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Check My Github"
+        >
           <i className="zmdi zmdi-github" />
         </a>
 

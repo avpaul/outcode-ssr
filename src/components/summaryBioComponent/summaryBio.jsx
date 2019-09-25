@@ -103,6 +103,8 @@ const SummaryBio = ({ theme }) => {
           title="Send Me An Email!"
           theme={theme}
           href="mailto:paul@outcode.dev"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Got a cool project?
         </SendEmailButton>

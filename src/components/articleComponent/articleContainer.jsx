@@ -7,6 +7,8 @@ import convertFromMarkdown from "../../helpers/markdownConverter";
 import { subscriber } from "../../services/themeService";
 import Loader from "../loaderComponent/loader";
 import NotFoundPage from "../notFoundComponent/notFound";
+import profileImage from "../../assets/profile-image.png";
+
 
 const ArticleInfo = styled.div`
   padding-top: 16px;
@@ -71,14 +73,52 @@ const ArticleContainer = ({ match }) => {
     }
   }, [match.params.slug]);
 
+  const formatTime = min => {
+    if (min > 1) return `0${min} mins`;
+    if (min === 1) return `01 min`;
+    if (min <= 1) return `0${min} mins`;
+  };
+
+  const formatContent = () => {
+    const content = convertFromMarkdown(article.content).split(/<\/h1>/);
+
+    const headerContent = `
+        <div class="article-header">
+         <div class="profile-image">
+            <img src=${profileImage} alt="av paul" />
+          </div>
+          <div>
+            <p>
+              Last Updated on ${new Date(article.updatedAt).toDateString()}
+            </p>
+            <p>${formatTime(article.readTime)}&nbsp;read</p>
+          </div>
+        </div>
+      `;
+    return [content[0], "</h1>", headerContent, content[1]].join("");
+  };
+
   return isSlug ? (
     <Wrapper>
       {loading ? (
         <Loader theme={theme} size="small" />
       ) : (
         <>
+          {/* <div
+            className={`article-header ${theme === "dark" ? "theme-dark" : ""}`}
+          >
+            <ProfileImage>
+              <img src={profileImage} alt="av paul" />
+            </ProfileImage>
+            <div>
+              <p>
+                Last Updated on {new Date(article.updatedAt).toDateString()}
+              </p>
+              <p>{formatTime(article.readTime)}&nbsp;read</p>
+            </div>
+          </div> */}
           <Article
-            content={convertFromMarkdown(article.content)}
+            content={formatContent()}
             tags={article.tags}
             theme={theme}
           />
@@ -89,7 +129,9 @@ const ArticleContainer = ({ match }) => {
                 <strong>{article.author}</strong>
               </Link>
             </p>
-            <p>Published on {new Date(article.updatedAt).toDateString()}</p>
+            <p>
+              First Published on {new Date(article.createdAt).toDateString()}
+            </p>
           </ArticleInfo>
           <Link
             to="/"

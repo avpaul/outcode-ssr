@@ -117,7 +117,12 @@ const Home = () => {
   return (
     <div style={{ marginTop: 32, marginBottom: 32 }}>
       <SummaryBio theme={theme} />
-      <Heading theme={theme}>Recent articles:</Heading>
+      <Heading theme={theme}>
+        Things I Learned{" "}
+        <span role="img" aria-label="thought">
+          💭
+        </span>
+      </Heading>
       {articles && (
         <SecondaryArticles>
           {articles.map((article, index) => (
