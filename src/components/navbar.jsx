@@ -122,6 +122,7 @@ const UpdateButton = styled.div`
   right: 0;
   height: 44px;
   width: 325px;
+  padding-left: 8px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -137,27 +138,31 @@ const UpdateButton = styled.div`
 
   .btn {
     height: 36px;
-    min-width: 24px;
-    margin: 0 8px;
+    min-width: 36px;
+    margin-left: 8px;
     font-size: 14px;
     font-family: "Avenir";
     background-color: transparent;
     color: #f9a602;
     border: none;
     cursor: pointer;
+
     &:focus {
       outline: none;
     }
+
     &:active {
       outline: false;
     }
-    @media only screen and (max-width: 768px) {
-      height: 32px;
-      width: 32px;
-      font-size: 20px;
-    }
+
     &:last-of-type {
       color: #ffffff;
+    }
+
+    @media only screen and (max-width: 768px) {
+      height: 32px;
+      width: auto;
+      font-size: 14px;
     }
   }
   ${props =>
