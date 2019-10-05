@@ -1,15 +1,15 @@
-import React, { useState, useRef, Fragment, useEffect } from "react";
-import styled, { css } from "styled-components";
-import convertMarkdown from "../../helpers/markdownConverter";
-import saveArticle from "../../api/editor";
-import Article from "../articleComponent/article";
-import Chips from "../chips/chips";
-import upLoader from "../../helpers/imageUploader";
-import { getTitle, getDescription } from "../../helpers/getArticleParts";
-import { subscriber } from "../../services/updateArticleService";
-import { subscriber as themeSubscriber } from "../../services/themeService";
-import { getArticle } from "../../api/article.js";
-import "./editor.scss";
+import React, { useState, useRef, Fragment, useEffect } from 'react';
+import styled, { css } from 'styled-components';
+import convertMarkdown from '../../helpers/markdownConverter';
+import saveArticle from '../../api/editor';
+import Article from '../articleComponent/article';
+import Chips from '../chips/chips';
+import upLoader from '../../helpers/imageUploader';
+import { getTitle, getDescription } from '../../helpers/getArticleParts';
+import { subscriber } from '../../services/updateArticleService';
+import { subscriber as themeSubscriber } from '../../services/themeService';
+import { getArticle } from '../../api/article.js';
+import './editor.scss';
 
 const Container = styled.div`
   position: relative;
@@ -24,11 +24,11 @@ const EditStatus = styled.div`
   font-size: 14px;
   line-height: 20px;
   font-weight: 200;
-  font-family: "Avenir";
+  font-family: 'Avenir';
   color: #17223b;
   border-bottom: #17223b 1px solid;
   ${props =>
-    props.theme === "dark" &&
+    props.theme === 'dark' &&
     css`
       color: #ffffff;
       border-bottom-color: #f9a602;
@@ -36,13 +36,13 @@ const EditStatus = styled.div`
 `;
 
 const Editor = ({ history }) => {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const [errors, setErrors] = useState({});
-  const [contentHTML, setContentHTML] = useState("<p>Tell your story...</p>");
-  const [title, setTitle] = useState("");
-  const [status, setStatus] = useState("draft");
+  const [contentHTML, setContentHTML] = useState('<p>Tell your story...</p>');
+  const [title, setTitle] = useState('');
+  const [status, setStatus] = useState('draft');
   const [slug, setSlug] = useState(null);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
   const [featuredImage, setFeaturedImage] = useState(null);
   const [chips, setChips] = useState([]);
   const [preview, setPreview] = useState(false);
@@ -53,9 +53,9 @@ const Editor = ({ history }) => {
   const markdownInput = useRef(null);
 
   useEffect(() => {
-    document.title = title ? title : "Start writing ✍️";
+    document.title = title ? title : 'Start writing ✍️';
     return () => {
-      document.title = "Outcode by Paul";
+      document.title = 'Outcode by AV Paul';
     };
   }, [title]);
 
@@ -87,7 +87,7 @@ const Editor = ({ history }) => {
       setFeaturedImage(imageURL);
       return imageURL;
     } catch (error) {
-      setErrors({ image: "image upload failed", ...errors });
+      setErrors({ image: 'image upload failed', ...errors });
     }
   };
 
@@ -126,14 +126,14 @@ const Editor = ({ history }) => {
   };
 
   const onPublish = () => {
-    setStatus("published");
+    setStatus('published');
     saveArticle({
       content,
       tags: chips,
       title,
       description,
       featuredImage,
-      status: "published",
+      status: 'published',
       slug
     })
       .then(({ data: article }) => {
@@ -159,7 +159,7 @@ const Editor = ({ history }) => {
     <Container>
       <div className="editor-status">
         {imageUploaded && (
-          <div className={`toast ${theme === "dark" ? "theme-dark" : ""}`}>
+          <div className={`toast ${theme === 'dark' ? 'theme-dark' : ''}`}>
             <i className="zmdi zmdi-check" />
             &nbsp; Image uploaded!
           </div>
@@ -178,18 +178,18 @@ const Editor = ({ history }) => {
         <button
           title="Preview Article"
           className={`btn-editor-preview ${
-            theme === "dark" ? "theme-dark" : ""
+            theme === 'dark' ? 'theme-dark' : ''
           }`}
           onClick={() => {
             setPreview(!preview);
           }}
         >
-          <i className={`zmdi zmdi-${!preview ? "eye" : "edit"}`} />
+          <i className={`zmdi zmdi-${!preview ? 'eye' : 'edit'}`} />
         </button>
         <button
           title="Add Image"
           className={`btn-editor-upload ${
-            theme === "dark" ? "theme-dark" : ""
+            theme === 'dark' ? 'theme-dark' : ''
           }`}
           onClick={evt => {
             evt.preventDefault();
@@ -208,8 +208,8 @@ const Editor = ({ history }) => {
         />
         <button
           title="Publish Article"
-          className={`btn-publish ${theme === "dark" ? "theme-dark" : ""}`}
-          disabled={slug === null || status === "published" ? true : false}
+          className={`btn-publish ${theme === 'dark' ? 'theme-dark' : ''}`}
+          disabled={slug === null || status === 'published' ? true : false}
           onClick={onPublish}
         >
           <i className="zmdi zmdi-file-text" />
@@ -219,7 +219,7 @@ const Editor = ({ history }) => {
         <Fragment>
           <textarea
             className={`article-editor--container ${
-              theme === "dark" ? "theme-dark" : ""
+              theme === 'dark' ? 'theme-dark' : ''
             }`}
             placeholder="Tell your story..."
             value={content}

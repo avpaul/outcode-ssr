@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
-import { subscriber, themeUpdateService } from "../services/themeService";
-import updateSubject from "../services/updateService";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+import { subscriber, themeUpdateService } from '../services/themeService';
+import updateSubject from '../services/updateService';
 
 const Nav = styled.nav`
   position: relative;
@@ -14,13 +14,13 @@ const Nav = styled.nav`
   border-bottom: 1px solid #6b778d;
   .nav-logo {
     min-width: 300px;
-    font-family: "Avenir";
+    font-family: 'Avenir';
     font-weight: 200;
     font-size: 38px;
     text-decoration: none;
     color: #17223b;
     ${props =>
-      props.theme === "dark" &&
+      props.theme === 'dark' &&
       css`
         color: #ffffff;
       `}
@@ -66,14 +66,14 @@ const Nav = styled.nav`
         line-height: 36px;
       }
       ${props =>
-        props.theme === "dark" &&
+        props.theme === 'dark' &&
         css`
           background-color: #202124;
         `}
     }
   }
   ${props =>
-    props.theme === "dark" &&
+    props.theme === 'dark' &&
     css`
       border-bottom-color: #ffffff;
     `}
@@ -110,7 +110,7 @@ const ThemeButton = styled.button`
     line-height: 36px;
   }
   ${props =>
-    props.theme === "dark" &&
+    props.theme === 'dark' &&
     css`
       background-color: #202124;
     `}
@@ -141,7 +141,7 @@ const UpdateButton = styled.div`
     min-width: 36px;
     margin-left: 8px;
     font-size: 14px;
-    font-family: "Avenir";
+    font-family: 'Avenir';
     background-color: transparent;
     color: #f9a602;
     border: none;
@@ -166,7 +166,7 @@ const UpdateButton = styled.div`
     }
   }
   ${props =>
-    props.theme === "dark" &&
+    props.theme === 'dark' &&
     css`
       background-color: #343e3d;
     `}
@@ -181,7 +181,7 @@ const Navbar = () => {
       setTheme(value);
     });
     updateSubject.subscribe(data => {
-      if (data.type === "REQUEST_UPDATE_PERMISSION") setUpdateAvailable(true);
+      if (data.type === 'REQUEST_UPDATE_PERMISSION') setUpdateAvailable(true);
     });
     return () => {
       if (!updateSubject.closed) updateSubject.complete();
@@ -215,16 +215,16 @@ const Navbar = () => {
         </a>
 
         <ThemeButton
-          title={`Change To ${theme === "light" ? "Dark" : "Light"} Mode`}
+          title={`Change To ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
           theme={theme}
           onClick={evt => {
             evt.preventDefault();
-            if (theme === "light") {
-              themeUpdateService.set("dark");
-            } else themeUpdateService.set("light");
+            if (theme === 'light') {
+              themeUpdateService.set('dark');
+            } else themeUpdateService.set('light');
           }}
         >
-          {theme === "light" ? (
+          {theme === 'light' ? (
             <i className="zmdi zmdi-brightness-2" />
           ) : (
             <i className="zmdi zmdi-brightness-7" />
@@ -242,7 +242,7 @@ const Navbar = () => {
             onClick={evt => {
               evt.preventDefault();
               setUpdateAvailable(false);
-              updateSubject.next({ type: "UPDATE_PERMISSION_GRANTED" });
+              updateSubject.next({ type: 'UPDATE_PERMISSION_GRANTED' });
             }}
           >
             REFRESH
@@ -254,7 +254,7 @@ const Navbar = () => {
             onClick={evt => {
               evt.preventDefault();
               setUpdateAvailable(false);
-              updateSubject.next({ type: "UPDATE_PERMISSION_DENIED" });
+              updateSubject.next({ type: 'UPDATE_PERMISSION_DENIED' });
             }}
           >
             &#10005;

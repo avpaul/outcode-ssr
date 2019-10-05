@@ -29,7 +29,7 @@ $medium-and-up: 768px;
     font-size: 38px;
     font-weight: 700;
     color: #17223b;
-    font-family: "Avenir";
+    font-family: 'Avenir';
     @media only screen and (max-width: 768px) {
       font-size: 32px;
     }
@@ -57,7 +57,7 @@ $medium-and-up: 768px;
     font-weight: 200;
     font-size: 20px;
     line-height: 28px;
-    font-family: "Avenir";
+    font-family: 'Avenir';
   }
 
   p {
@@ -73,7 +73,7 @@ $medium-and-up: 768px;
   pre {
     width: 90%;
     margin: 16px auto;
-    padding: 25px 50px;
+    padding: 25px 25px;
     background-color: #17223b;
     border-radius: 2px;
     overflow-y: auto;

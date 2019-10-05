@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
-import { subscriber } from "../../services/themeService";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+import { subscriber } from '../../services/themeService';
+import notFoundImage from '../../assets/notfound.png';
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,12 +24,12 @@ const Caption = styled.div`
   padding: 8px;
   margin-top: 8px;
   margin-bottom: 8px;
-  font-family: "Avenir";
+  font-family: 'Avenir';
   font-weight: 200;
   font-size: 24px;
   color: #17223b;
   ${props =>
-    props.theme === "dark" &&
+    props.theme === 'dark' &&
     css`
       color: #ffffff;
     `}
@@ -45,7 +46,7 @@ const NotFoundPage = () => {
   return (
     <Wrapper>
       <ImageWrapper>
-        <img src="https://i.imgur.com/A040Lxr.png" alt="page not found" />
+        <img src={notFoundImage} alt="page not found" />
       </ImageWrapper>
       <Caption theme={theme}>
         Ooops&nbsp;
@@ -57,7 +58,7 @@ const NotFoundPage = () => {
       <Link
         to="/"
         className={`btn--back-home page-not-found ${
-          theme === "dark" ? "theme-dark" : ""
+          theme === 'dark' ? 'theme-dark' : ''
         }`}
       >
         <i className="zmdi zmdi-long-arrow-left" />
