@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import { subscriber as authSubscriber } from "../../services/userService";
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { subscriber as authSubscriber } from '../../services/userService';
 
 const Authenticator = WrappedComponent => {
   const [token, setToken] = useState(authSubscriber.value);

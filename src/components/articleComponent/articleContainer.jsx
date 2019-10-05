@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
-import Article from "./article";
-import { getArticle } from "../../api/article";
-import convertFromMarkdown from "../../helpers/markdownConverter";
-import { subscriber } from "../../services/themeService";
-import Loader from "../loaderComponent/loader";
-import NotFoundPage from "../notFoundComponent/notFound";
-import profileImage from "../../assets/profile-image.png";
-
+import React, { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
+import Article from './article';
+import { getArticle } from '../../api/article';
+import convertFromMarkdown from '../../helpers/markdownConverter';
+import { subscriber } from '../../services/themeService';
+import Loader from '../loaderComponent/loader';
+import NotFoundPage from '../notFoundComponent/notFound';
+import profileImage from '../../assets/profile-image.png';
 
 const ArticleInfo = styled.div`
   padding-top: 16px;
   padding-bottom: 32px;
   p {
     padding-top: 8px;
-    font-family: "Avenir";
+    font-family: 'Avenir';
     font-weight: 200;
     color: #17223b;
     ${props =>
-      props.theme === "dark" &&
+      props.theme === 'dark' &&
       css`
         color: #ffffff;
       `}
@@ -39,22 +38,73 @@ const Wrapper = styled.div`
 `;
 
 const ArticleContainer = ({ match }) => {
-  const [article, setArticle] = useState({ content: "", tags: [] });
+  const [article, setArticle] = useState({ content: '', tags: [] });
   const [theme, setTheme] = useState(subscriber.value);
   const [isSlug, setIsSlug] = useState(true);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = article.title || "Loading...";
+    document.title = article.title || 'Loading...';
+    document
+      .querySelector('meta[name="description"]')
+      .setAttribute('content', `${article.description || ''}`);
+    document
+      .querySelector('meta[property="og:title"]')
+      .setAttribute('content', `${article.title || 'Outcode by AV Paul'}`);
+    document
+      .querySelector('meta[property="og:type"]')
+      .setAttribute('content', 'article');
+    document
+      .querySelector('meta[property="og:url"]')
+      .setAttribute('content', `https://www.outcode.dev/${article.slug || ''}`);
+    document
+      .querySelector('meta[property="og:description"]')
+      .setAttribute('content', `${article.description || ''} `);
+    document
+      .querySelector('meta[name="twitter:description"]')
+      .setAttribute('content', `${article.description || ''}`);
+    document
+      .querySelector('meta[name="twitter:title"]')
+      .setAttribute('content', `${article.title || ''}`);
     return () => {
-      document.title = "Outcode by Paul";
+      document.title = 'Outcode by AV Paul';
+      document
+        .querySelector('meta[name="description"]')
+        .setAttribute(
+          'content',
+          'Javascript full-stack software engineer. Experienced in full project life cycle, and working in demanding environments focused on producing cutting-edge systems.'
+        );
+      document
+        .querySelector('meta[property="og:title"]')
+        .setAttribute('content', 'Outcode by AV Paul');
+      document
+        .querySelector('meta[property="og:type"]')
+        .setAttribute('content', 'blog');
+      document
+        .querySelector('meta[property="og:url"]')
+        .setAttribute('content', 'https://www.outcode.dev');
+      document
+        .querySelector('meta[property="og:description"]')
+        .setAttribute(
+          'content',
+          'Javascript full-stack software engineer. Experienced in full project life cycle, and working in demanding environments focused on producing cutting-edge systems.'
+        );
+      document
+        .querySelector('meta[name="twitter:title"]')
+        .setAttribute('content', 'Outcode by AV Paul');
+      document
+        .querySelector('meta[name="twitter:description"]')
+        .setAttribute(
+          'content',
+          'Javascript full-stack software engineer. Experienced in full project life cycle, and working in demanding environments focused on producing cutting-edge systems.'
+        );
     };
   }, [article]);
 
   useEffect(() => {
     let abort = false;
     const slug = match.params.slug;
-    if (!slug.split("-", 2)[1]) {
+    if (!slug.split('-', 2)[1]) {
       abort = true;
       setIsSlug(false);
     }
@@ -95,7 +145,7 @@ const ArticleContainer = ({ match }) => {
           </div>
         </div>
       `;
-    return [content[0], "</h1>", headerContent, content[1]].join("");
+    return [content[0], '</h1>', headerContent, content[1]].join('');
   };
 
   return isSlug ? (
@@ -104,19 +154,6 @@ const ArticleContainer = ({ match }) => {
         <Loader theme={theme} size="small" />
       ) : (
         <>
-          {/* <div
-            className={`article-header ${theme === "dark" ? "theme-dark" : ""}`}
-          >
-            <ProfileImage>
-              <img src={profileImage} alt="av paul" />
-            </ProfileImage>
-            <div>
-              <p>
-                Last Updated on {new Date(article.updatedAt).toDateString()}
-              </p>
-              <p>{formatTime(article.readTime)}&nbsp;read</p>
-            </div>
-          </div> */}
           <Article
             content={formatContent()}
             tags={article.tags}
@@ -135,11 +172,11 @@ const ArticleContainer = ({ match }) => {
           </ArticleInfo>
           <Link
             to="/"
-            className={`btn--back-home ${theme === "dark" ? "theme-dark" : ""}`}
+            className={`btn--back-home ${theme === 'dark' ? 'theme-dark' : ''}`}
           >
             <i className="zmdi zmdi-long-arrow-left" />
             &nbsp; back home
-          </Link>{" "}
+          </Link>{' '}
         </>
       )}
     </Wrapper>
