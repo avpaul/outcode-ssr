@@ -1,18 +1,3 @@
-@font-face {
-  font-family: "Avenir";
-  src: url("./assets/avenir/avenir-lt-std-cufonfonts-webfont/AvenirLTStd-Light.woff");
-  font-weight: 200;
-}
-@font-face {
-  font-family: "Avenir";
-  src: url("./assets/avenir/avenir-lt-std-cufonfonts-webfont/AvenirLTStd-Medium.woff");
-  font-weight: 500;
-}
-@font-face {
-  font-family: "Avenir";
-  src: url("./assets/avenir/avenir-lt-std-cufonfonts-webfont/AvenirLTStd-Heavy.woff");
-  font-weight: 700;
-}
 * {
   padding: 0;
   margin: 0;
@@ -23,11 +8,14 @@ html,
 body {
   height: 100%;
   width: 100%;
-  font-family: "Avenir";
+  font-family: 'Avenir';
+  font-display: optional;
+  @media (prefers-color-scheme: dark) {
+    background-color: #202124;
+  }
 }
 
 div#root {
   height: 100%;
   width: 100%;
 }
-

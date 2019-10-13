@@ -1,79 +1,78 @@
-import axios from "axios";
+import axios from 'axios';
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const getMainArticles = async ({ page = 0, limit = 6 }) => {
   try {
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API_URL}/articles?page=${page}&limit=${limit}`,
+      `${publicRuntimeConfig.API_URL}/articles?page=${page}&limit=${limit}`,
       {}
     );
     return data;
   } catch (error) {
-    return error;
+    return { error: error.response || error };
   }
 };
 
 const getPublishedArticles = async ({ page = 0, limit = 6 }) => {
   try {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const { data } = await axios.get(
-      `${
-        process.env.REACT_APP_API_URL
-      }/articles/published?page=${page}&limit=${limit}`,
+      `${publicRuntimeConfig.API_URL}/articles/published?page=${page}&limit=${limit}`,
       {
         headers: { authorization: `Bearer ${token}` },
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
     );
     return data;
   } catch (error) {
-    return error;
+    return { error: error.response || error };
   }
 };
 
 const getDraftArticles = async ({ page = 0, limit = 6 }) => {
   try {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const { data } = await axios.get(
-      `${
-        process.env.REACT_APP_API_URL
-      }/articles/drafts?page=${page}&limit=${limit}`,
+      `${publicRuntimeConfig.API_URL}/articles/drafts?page=${page}&limit=${limit}`,
       {
         headers: { authorization: `Bearer ${token}` },
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
     );
     return data;
   } catch (error) {
-    return error;
+    return { error: error.response || error };
   }
 };
 
 const getArticle = async slug => {
   try {
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API_URL}/articles/${slug}`,
+      `${publicRuntimeConfig.API_URL}/articles/${slug}`,
       {}
     );
     return data;
   } catch (error) {
-    return error;
+    return { error: error.response || error };
   }
 };
 
 const deleteArticle = async slug => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   try {
     const { data } = await axios.delete(
-      `${process.env.REACT_APP_API_URL}/articles/${slug}`,
+      `${publicRuntimeConfig.API_URL}/articles/${slug}`,
       {
         headers: { authorization: `Bearer ${token}` },
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
     );
     return data;
   } catch (error) {
-    return error;
+    return { error: error.response || error };
   }
 };
 

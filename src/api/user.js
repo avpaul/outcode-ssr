@@ -1,10 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const login = ({ email, password }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/login`,
+        `${publicRuntimeConfig.APP_API_URL}/auth/login`,
         { email, password },
         {}
       );
