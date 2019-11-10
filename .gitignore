@@ -37,6 +37,7 @@ yarn-error.log*
 # production
 /build
 .env
+now.json
 .next
 
 # misc
