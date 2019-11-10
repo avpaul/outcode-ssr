@@ -18,7 +18,7 @@ const getMainArticles = async ({ page = 0, limit = 6 }) => {
 const getPublishedArticles = async ({ page = 0, limit = 6 }) => {
   try {
     const token = localStorage.getItem('token');
-    const { data } = await axios.get(
+    const { data, status } = await axios.get(
       `${publicRuntimeConfig.API_URL}/articles/published?page=${page}&limit=${limit}`,
       {
         headers: { authorization: `Bearer ${token}` },
@@ -27,6 +27,12 @@ const getPublishedArticles = async ({ page = 0, limit = 6 }) => {
     );
     return data;
   } catch (error) {
+    if (error.response) {
+      const { data, status } = error.response;
+      if (status === 401) {
+        return { error: 'Unauthorized', data };
+      }
+    }
     return { error: error.response || error };
   }
 };
@@ -43,6 +49,12 @@ const getDraftArticles = async ({ page = 0, limit = 6 }) => {
     );
     return data;
   } catch (error) {
+    if (error.response) {
+      const { data, status } = error.response;
+      if (status === 401) {
+        return { error: 'Unauthorized', data };
+      }
+    }
     return { error: error.response || error };
   }
 };

@@ -23,7 +23,7 @@ const saveArticle = data =>
         throw new Error('title or description too short');
 
       const response = await axios[`${method}`](
-        `${publicRuntimeConfig.APP_API_URL}${uri}`,
+        `${publicRuntimeConfig.API_URL}${uri}`,
         { ...data, author: 'av paul' },
         {
           headers: { authorization: `Bearer ${token}` },

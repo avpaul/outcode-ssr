@@ -13730,7 +13730,8 @@ const getPublishedArticles = async ({
   try {
     const token = localStorage.getItem('token');
     const {
-      data
+      data,
+      status
     } = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(publicRuntimeConfig.API_URL, "/articles/published?page=").concat(page, "&limit=").concat(limit), {
       headers: {
         authorization: "Bearer ".concat(token)
@@ -13739,6 +13740,20 @@ const getPublishedArticles = async ({
     });
     return data;
   } catch (error) {
+    if (error.response) {
+      const {
+        data,
+        status
+      } = error.response;
+
+      if (status === 401) {
+        return {
+          error: 'Unauthorized',
+          data
+        };
+      }
+    }
+
     return {
       error: error.response || error
     };
@@ -13761,6 +13776,20 @@ const getDraftArticles = async ({
     });
     return data;
   } catch (error) {
+    if (error.response) {
+      const {
+        data,
+        status
+      } = error.response;
+
+      if (status === 401) {
+        return {
+          error: 'Unauthorized',
+          data
+        };
+      }
+    }
+
     return {
       error: error.response || error
     };

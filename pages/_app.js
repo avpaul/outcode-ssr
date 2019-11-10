@@ -6,7 +6,6 @@ import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import getConfig from 'next/config';
 import '../src/App.scss';
-// import Analytics from './analytics/analytics';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 

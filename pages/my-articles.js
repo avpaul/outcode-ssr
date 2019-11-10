@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import TabContainer from '../components/tab';
 import List from '../components/list/list';
@@ -8,7 +9,6 @@ import {
   getPublishedArticles,
   deleteArticle
 } from '../src/api/article';
-// import { subscriber } from '../../services/updateArticleService';
 
 const NoArticlesBanner = styled.div`
   margin-top: 14px;
@@ -27,12 +27,16 @@ const NoArticlesBanner = styled.div`
 `;
 
 const UserArticles = () => {
+  const router = useRouter();
   const [publishedArticles, setPublishedArticles] = useState([]);
   const [draftArticles, setDraftArticles] = useState([]);
 
   useEffect(() => {
     getPublishedArticles({ page: 0, limit: 6 }).then(({ data, error }) => {
       if (error) {
+        if (error === 'Unauthorized') {
+          return router.push('/login');
+        }
         return;
       }
       setPublishedArticles(data);
@@ -70,14 +74,8 @@ const UserArticles = () => {
                 >
                   <i className="zmdi zmdi-delete" />
                 </button>
-                <Link href="/editor">
-                  <a
-                    title="Read This Article"
-                    className="btn-edit"
-                    onClick={evt => {
-                      subscriber.next(article.slug);
-                    }}
-                  >
+                <Link href={`/editor?slug=${article.slug}`}>
+                  <a title="Edit This Article" className="btn-edit">
                     <i className="zmdi zmdi-edit" />
                   </a>
                 </Link>
@@ -125,14 +123,8 @@ const UserArticles = () => {
                 >
                   <i className="zmdi zmdi-delete" />
                 </button>
-                <Link href="/editor">
-                  <a
-                    title="Update This Article"
-                    className="btn-edit"
-                    onClick={() => {
-                      subscriber.next(article.slug);
-                    }}
-                  >
+                <Link href={`/editor?slug=${article.slug}`}>
+                  <a title="Update This Article" className="btn-edit">
                     <i className="zmdi zmdi-edit" />
                   </a>
                 </Link>

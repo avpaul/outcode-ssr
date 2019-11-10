@@ -127,9 +127,6 @@ $medium-and-up: 768px;
   }
 
   @media (prefers-color-scheme: dark) {
-    // }
-
-    //   &.theme-dark {
     h1,
     h2,
     h3 {
@@ -232,7 +229,6 @@ $medium-and-up: 768px;
   }
 
   @media (prefers-color-scheme: dark) {
-    // &.theme-dark {
     color: #f5f5f5;
     border-color: #f5f5f5;
 

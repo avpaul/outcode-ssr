@@ -7,7 +7,7 @@ const login = ({ email, password }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await axios.post(
-        `${publicRuntimeConfig.APP_API_URL}/auth/login`,
+        `${publicRuntimeConfig.API_URL}/auth/login`,
         { email, password },
         {}
       );

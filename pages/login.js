@@ -1,8 +1,9 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import LoginButton from '../components/loginButton/button';
 import login from '../src/api/user';
-// import { tokenUpdateService } from '../src/services/userService';
+import { tokenUpdateService } from '../src/services/userService';
 
 const Container = styled.div`
   position: relative;
@@ -21,13 +22,15 @@ const Container = styled.div`
   }
 `;
 
-const Login = ({ history }) => {
+const Login = () => {
+  const router = useRouter();
+
   const userLogin = ({ email, password }) => {
     if (!email || !password) return null;
     login({ email, password })
       .then(({ token }) => {
         tokenUpdateService.set(token);
-        history.push('/');
+        router.push('/');
       })
       .catch(error => {
         if (error.error) {

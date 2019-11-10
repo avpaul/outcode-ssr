@@ -1,13 +1,13 @@
 import React, { useState, useRef, Fragment, useEffect } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import convertMarkdown from '../src/helpers/markdownConverter';
 import saveArticle from '../src/api/editor';
-import Article from './[slug]';
+import Article from '../components/article/article';
 import Chips from '../components/chips/chips';
 import upLoader from '../src/helpers/imageUploader';
 import { getTitle, getDescription } from '../src/helpers/getArticleParts';
-import { subscriber } from '../src/services/updateArticleService';
 import { getArticle } from '../src/api/article.js';
 import './styles/editor.scss';
 
@@ -46,25 +46,26 @@ const Editor = ({ history }) => {
   const [preview, setPreview] = useState(false);
   const [imageUploaded, setImageUploaded] = useState(false);
   const [saveStatus, setSaveStatus] = useState(false);
+  const router = useRouter();
   const imageInput = useRef(null);
   const markdownInput = useRef(null);
 
   useEffect(() => {
-    subscriber.subscribe(slug => {
-      slug &&
-        getArticle(slug)
-          .then(({ data: article }) => {
-            setContent(article.content);
-            setChips(article.tags);
-            setSlug(article.slug);
-            setStatus(article.status);
-            setTitle(article.title);
-            setDescription(article.description);
-            setContentHTML(convertMarkdown(article.content));
-          })
-          .catch(error => {});
-    });
-  }, []);
+    const { slug: updateSlug } = router.query;
+
+    updateSlug &&
+      getArticle(updateSlug)
+        .then(({ data: article }) => {
+          setContent(article.content);
+          setChips(article.tags);
+          setSlug(article.slug);
+          setStatus(article.status);
+          setTitle(article.title);
+          setDescription(article.description);
+          setContentHTML(convertMarkdown(article.content));
+        })
+        .catch(error => {});
+  }, [router.query]);
 
   const uploadImage = async evt => {
     evt.preventDefault();
@@ -105,9 +106,7 @@ const Editor = ({ history }) => {
           setSaveStatus(true);
         })
         .catch(error => {
-          // if (process.env.REACT_APP_ENVIRONMENT === "development") {
           console.log(error);
-          // }
         });
     }
   };
@@ -124,7 +123,7 @@ const Editor = ({ history }) => {
       slug
     })
       .then(({ data: article }) => {
-        history.push(`/${article.slug}`);
+        router.push(`/${article.slug}`);
       })
       .catch(error => {
         console.log(error);

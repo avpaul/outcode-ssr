@@ -8,7 +8,6 @@ import { getArticle } from '../src/api/article';
 import convertFromMarkdown from '../src/helpers/markdownConverter';
 import Loader from '../components/loader/loader';
 import NotFoundPage from './notfound';
-// import profileImage from '../../assets/profile-image.png';
 
 const ArticleInfo = styled.div`
   padding-top: 16px;
@@ -45,16 +44,16 @@ const ArticleContainer = () => {
   const { slug } = router.query;
 
   useEffect(() => {
-    if (slug && !slug.split('-', 2)[1]) {
+    if (slug && !!slug.split('-', 2)[1]) {
       getArticle(slug).then(({ data, error }) => {
-        setLoading(false);
-        if (error) {
+        if (!!error) {
           setIsSlug(false);
           return;
         }
         setArticle(data);
+        setLoading(false);
       });
-    } else {
+    } else if (slug) {
       setIsSlug(false);
     }
   }, [slug]);
@@ -63,6 +62,15 @@ const ArticleContainer = () => {
     if (min > 1) return `0${min} mins`;
     if (min === 1) return `01 min`;
     if (min <= 1) return `0${min} mins`;
+  };
+
+  const formatDate = date => {
+    return new Intl.DateTimeFormat('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      day: '2-digit',
+      month: 'short'
+    }).format(new Date(date));
   };
 
   const formatContent = () => {
@@ -75,7 +83,7 @@ const ArticleContainer = () => {
           </div>
           <div>
             <p>
-              Last Updated on ${new Date(article.updatedAt).toDateString()}
+              Last Updated on ${formatDate(article.updatedAt)}
             </p>
             <p>${formatTime(article.readTime)}&nbsp;read</p>
           </div>
@@ -148,9 +156,7 @@ const ArticleContainer = () => {
                 </a>
               </Link>
             </p>
-            <p>
-              First Published on {new Date(article.createdAt).toDateString()}
-            </p>
+            <p>First Published on {formatDate(article.createdAt)}</p>
           </ArticleInfo>
           <Link href="/">
             <a className="btn--back-home">

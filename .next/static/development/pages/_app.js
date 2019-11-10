@@ -12364,7 +12364,6 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement;
 
 
 
- // import Analytics from './analytics/analytics';
 
 const {
   serverRuntimeConfig,
@@ -12388,7 +12387,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
     return __jsx(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, __jsx(next_head__WEBPACK_IMPORTED_MODULE_3___default.a, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 41
+        lineNumber: 40
       },
       __self: this
     }, __jsx("meta", {
@@ -12396,7 +12395,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "#17223B",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 42
+        lineNumber: 41
       },
       __self: this
     }), __jsx("meta", {
@@ -12404,7 +12403,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "Javascript full-stack software engineer. Experienced in full project life cycle, and working in demanding environments focused on producing cutting-edge systems.",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 43
+        lineNumber: 42
       },
       __self: this
     }), __jsx("meta", {
@@ -12412,7 +12411,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "summary",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 47
+        lineNumber: 46
       },
       __self: this
     }), __jsx("meta", {
@@ -12420,7 +12419,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "@av_depaul",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 48
+        lineNumber: 47
       },
       __self: this
     }), __jsx("meta", {
@@ -12428,7 +12427,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "Outcode by AV Paul",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 49
+        lineNumber: 48
       },
       __self: this
     }), __jsx("meta", {
@@ -12436,7 +12435,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "https://outcode.dev/profile-image.png",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 50
+        lineNumber: 49
       },
       __self: this
     }), __jsx("meta", {
@@ -12444,7 +12443,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "Javascript full-stack software engineer. Experienced in full project life cycle, and working in demanding environments focused on producing cutting-edge systems.",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 54
+        lineNumber: 53
       },
       __self: this
     }), __jsx("meta", {
@@ -12452,7 +12451,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "@av_depaul",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 58
+        lineNumber: 57
       },
       __self: this
     }), __jsx("meta", {
@@ -12460,7 +12459,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "Outcode by AV Paul",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 59
+        lineNumber: 58
       },
       __self: this
     }), __jsx("meta", {
@@ -12468,7 +12467,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "blog",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 60
+        lineNumber: 59
       },
       __self: this
     }), __jsx("meta", {
@@ -12476,7 +12475,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "https://www.outcode.dev/",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 61
+        lineNumber: 60
       },
       __self: this
     }), __jsx("meta", {
@@ -12484,7 +12483,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "Javascript full-stack software engineer. Experienced in full project life cycle, and working in demanding environments focused on producing cutting-edge systems.",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 62
+        lineNumber: 61
       },
       __self: this
     }), __jsx("meta", {
@@ -12492,7 +12491,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "Outcode by AV Paul",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 66
+        lineNumber: 65
       },
       __self: this
     }), __jsx("meta", {
@@ -12500,7 +12499,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: "https://outcode.dev/profile-image.png",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 67
+        lineNumber: 66
       },
       __self: this
     }), __jsx("meta", {
@@ -12508,7 +12507,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       content: publicRuntimeConfig.APP_CSP,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 71
+        lineNumber: 70
       },
       __self: this
     }), __jsx("link", {
@@ -12516,7 +12515,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       href: "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 75
+        lineNumber: 74
       },
       __self: this
     }), __jsx("link", {
@@ -12524,45 +12523,45 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       href: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/themes/prism-okaidia.min.css",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 79
+        lineNumber: 78
       },
       __self: this
     }), __jsx("title", {
       key: "title",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 83
+        lineNumber: 82
       },
       __self: this
     }, "Outcode by AV Paul")), __jsx(AppContainerWrapper, {
       theme: 'light',
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 85
+        lineNumber: 84
       },
       __self: this
     }, __jsx(AppContainer, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 86
+        lineNumber: 85
       },
       __self: this
     }, __jsx(_components_navbar__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 87
+        lineNumber: 86
       },
       __self: this
     }), __jsx(Component, Object(_babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, pageProps, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 89
+        lineNumber: 88
       },
       __self: this
     })), __jsx(_components_footer__WEBPACK_IMPORTED_MODULE_6__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 90
+        lineNumber: 89
       },
       __self: this
     }))), __jsx("style", {
@@ -12571,7 +12570,7 @@ class AppWrapper extends next_app__WEBPACK_IMPORTED_MODULE_2___default.a {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 94
+        lineNumber: 93
       },
       __self: this
     }));

@@ -19,6 +19,8 @@
   line-height: 28px;
   font-family: 'Avenir';
   border: none;
+  resize: none;
+
   &:focus {
     outline: none;
   }
@@ -27,7 +29,7 @@
     display: block;
     color: #888888;
   }
-  // &.theme-dark {
+
   @media (prefers-color-scheme: dark) {
     &:empty:before {
       content: attr(placeholder);
@@ -85,7 +87,6 @@
     border-color: #888888;
   }
   @media (prefers-color-scheme: dark) {
-    // &.theme-dark {
     color: #ffffff;
     background-color: transparent;
     border-color: #ffffff;
@@ -108,9 +109,8 @@
   font-family: 'Avenir';
   color: #17223b;
   border-bottom: #17223b 1px solid;
-  
+
   @media (prefers-color-scheme: dark) {
-  // &.theme-dark {
     color: #ffffff;
     border-bottom-color: #f9a602;
   }
