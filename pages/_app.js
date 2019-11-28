@@ -4,10 +4,7 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
-import getConfig from 'next/config';
 import './styles/App.scss';
-
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const AppContainerWrapper = styled.div`
   width: 100%;
@@ -41,36 +38,57 @@ class AppWrapper extends App {
           <meta name="theme-color" content="#17223B" />
           <meta
             name="description"
+            key="description"
             content="Javascript full-stack software engineer. Experienced in full project life cycle, and working in demanding environments focused on producing cutting-edge systems."
           />
-          <meta name="twitter:card" content="summary" />
-          <meta name="twitter:site" content="@av_depaul" />
-          <meta name="twitter:title" content="Outcode by AV Paul" />
+          <meta name="twitter:card" key="tw:card" content="summary" />
+          <meta name="twitter:site" key="tw:site" content="@av_depaul" />
+          <meta
+            name="twitter:title"
+            key="tw:title"
+            content="Outcode by AV Paul"
+          />
           <meta
             property="twitter:image"
+            key="tw:image"
             content="https://outcode.dev/profile-image.png"
           />
           <meta
             name="twitter:description"
+            key="tw:description"
             content="Javascript full-stack software engineer. Experienced in full project life cycle, and working in demanding environments focused on producing cutting-edge systems."
           />
-          <meta name="twitter:creator" content="@av_depaul" />
-          <meta property="og:title" content="Outcode by AV Paul" />
-          <meta property="og:type" content="blog" />
-          <meta property="og:url" content="https://www.outcode.dev/" />
+          <meta name="twitter:creator" key="tw:creator" content="@av_depaul" />
+          <meta
+            property="og:title"
+            key="og:title"
+            content="Outcode by AV Paul"
+          />
+          <meta property="og:type" key="og:type" content="blog" />
+          <meta
+            property="og:url"
+            key="og:url"
+            content="https://www.outcode.dev/"
+          />
           <meta
             property="og:description"
+            key="og:description"
             content="Javascript full-stack software engineer. Experienced in full project life cycle, and working in demanding environments focused on producing cutting-edge systems."
           />
-          <meta property="og:site_name" content="Outcode by AV Paul" />
+          <meta
+            property="og:site_name"
+            key="og:site_name"
+            content="Outcode by AV Paul"
+          />
           <meta
             property="og:image"
+            key="og:image"
             content="https://outcode.dev/profile-image.png"
           />
           <meta
             httpEquiv="Content-Security-Policy"
-            content={publicRuntimeConfig.APP_CSP}
-          />
+            content={process.env.APP_CSP}
+          /> 
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
@@ -81,7 +99,7 @@ class AppWrapper extends App {
           />
           <title key="title">Outcode by AV Paul</title>
         </Head>
-        <AppContainerWrapper theme={'light'}>
+        <AppContainerWrapper>
           <AppContainer>
             <Navbar />
             {/*  child component will go here */}

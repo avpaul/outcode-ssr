@@ -1,12 +1,9 @@
 import axios from 'axios';
-import getConfig from 'next/config';
-
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const getMainArticles = async ({ page = 0, limit = 6 }) => {
   try {
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_URL}/articles?page=${page}&limit=${limit}`,
+      `${process.env.APP_API_URL}/articles?page=${page}&limit=${limit}`,
       {}
     );
     return data;
@@ -19,7 +16,7 @@ const getPublishedArticles = async ({ page = 0, limit = 6 }) => {
   try {
     const token = localStorage.getItem('token');
     const { data, status } = await axios.get(
-      `${publicRuntimeConfig.API_URL}/articles/published?page=${page}&limit=${limit}`,
+      `${process.env.APP_API_URL}/articles/published?page=${page}&limit=${limit}`,
       {
         headers: { authorization: `Bearer ${token}` },
         'Content-Type': 'application/json'
@@ -41,7 +38,7 @@ const getDraftArticles = async ({ page = 0, limit = 6 }) => {
   try {
     const token = localStorage.getItem('token');
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_URL}/articles/drafts?page=${page}&limit=${limit}`,
+      `${process.env.APP_API_URL}/articles/drafts?page=${page}&limit=${limit}`,
       {
         headers: { authorization: `Bearer ${token}` },
         'Content-Type': 'application/json'
@@ -62,7 +59,7 @@ const getDraftArticles = async ({ page = 0, limit = 6 }) => {
 const getArticle = async slug => {
   try {
     const { data } = await axios.get(
-      `${publicRuntimeConfig.API_URL}/articles/${slug}`,
+      `${process.env.APP_API_URL}/articles/${slug}`,
       {}
     );
     return data;
@@ -76,7 +73,7 @@ const deleteArticle = async slug => {
 
   try {
     const { data } = await axios.delete(
-      `${publicRuntimeConfig.API_URL}/articles/${slug}`,
+      `${process.env.APP_API_URL}/articles/${slug}`,
       {
         headers: { authorization: `Bearer ${token}` },
         'Content-Type': 'application/json'

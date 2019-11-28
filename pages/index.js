@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
-import ArticleView from '../components/articleView/articleView';
-import SummaryBio from '../components/summaryBio/summaryBio';
-import { getMainArticles } from '../src/api/article';
-import reduceTo from '../src/helpers/reduceTo';
-import Loader from '../components/loader/loader';
+import React, { useEffect, useState } from "react";
+import styled, { css } from "styled-components";
+import ArticleView from "../components/articleView/articleView";
+import SummaryBio from "../components/summaryBio/summaryBio";
+import { getMainArticles } from "../src/api/article";
+import reduceTo from "../src/helpers/reduceTo";
+import Loader from "../components/loader/loader";
 
 const SecondaryArticles = styled.section`
   display: flex;
@@ -66,36 +66,36 @@ const Heading = styled.h1`
   }
 `;
 
-const Home = () => {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Home = ({ articles: initialArticles, error: fetchError }) => {
+  const [articles, setArticles] = useState(initialArticles || []);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
 
   const colors = [
-    '#167C80',
-    '#72616E',
-    '#B33951',
-    '#E8846B',
-    '#16528E',
-    '#F3A712'
+    "#167C80",
+    "#72616E",
+    "#B33951",
+    "#E8846B",
+    "#16528E",
+    "#F3A712"
   ];
 
-  useEffect(() => {
-    getMainArticles({ page: 0, limit: 6 })
-      .then(({ data }) => {
-        setArticles(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setArticles([]);
-        setLoading(false);
-        // TODO: display the error
-      });
-  }, []);
+  // useEffect(() => {
+  //   getMainArticles({ page: 0, limit: 6 })
+  //     .then(({ data }) => {
+  //       setArticles(data);
+  //       setLoading(false);
+  //     })
+  //     .catch(error => {
+  //       setArticles([]);
+  //       setLoading(false);
+  //       // TODO: display the error
+  //     });
+  // }, []);
 
   const loadMore = () => {
     setPage(page + 1);
-    setLoading(true);
+    setLoading(false);
     getMainArticles({ page: page + 1, limit: 6 })
       .then(({ data }) => {
         setArticles(articles.concat(data));
@@ -110,7 +110,7 @@ const Home = () => {
     <div style={{ marginTop: 32, marginBottom: 32 }}>
       <SummaryBio />
       <Heading>
-        Things I Learned{' '}
+        Things I Learned{" "}
         <span role="img" aria-label="thought">
           💭
         </span>
@@ -129,9 +129,9 @@ const Home = () => {
       {loading && <Loader size="small" />}
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-end'
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end"
         }}
       >
         {(articles || loading) && (
@@ -147,6 +147,11 @@ const Home = () => {
       </div>
     </div>
   );
+};
+
+Home.getInitialProps = async () => {
+  const { data, error } = await getMainArticles({ page: 0, limit: 6 });
+  return { articles: data, error };
 };
 
 export default Home;

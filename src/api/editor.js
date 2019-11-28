@@ -1,8 +1,5 @@
 import axios from 'axios';
-import getConfig from 'next/config';
 import debounce from '../helpers/debounce';
-
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 /**
  *
@@ -23,7 +20,7 @@ const saveArticle = data =>
         throw new Error('title or description too short');
 
       const response = await axios[`${method}`](
-        `${publicRuntimeConfig.API_URL}${uri}`,
+        `${process.env.APP_API_URL}${uri}`,
         { ...data, author: 'av paul' },
         {
           headers: { authorization: `Bearer ${token}` },
