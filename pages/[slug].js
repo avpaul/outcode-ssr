@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import styled, { css } from "styled-components";
-import Link from "next/link";
-import Article from "../components/article/article";
-import { getArticle } from "../src/api/article";
-import convertFromMarkdown from "../src/helpers/markdownConverter";
-import Loader from "../components/loader/loader";
-import NotFoundPage from "./notfound";
+import React from 'react';
+import Head from 'next/head';
+import styled from 'styled-components';
+import Link from 'next/link';
+import Article from '../components/article/article';
+import { getArticle } from '../src/api/article';
+import convertFromMarkdown from '../src/helpers/markdownConverter';
 
 const ArticleInfo = styled.div`
   padding-top: 16px;
   padding-bottom: 32px;
   p {
     padding-top: 8px;
-    font-family: "Avenir";
-    font-weight: 200;
+    font-family: inherit;
+    font-weight: 400;
     color: #17223b;
 
     @media (prefers-color-scheme: dark) {
@@ -37,27 +34,6 @@ const Wrapper = styled.div`
 `;
 
 const ArticleContainer = ({ article }) => {
-  const router = useRouter();
-  // const [article, setArticle] = useState({ content: "", tags: [] });
-  const [isSlug, setIsSlug] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const { slug } = router.query;
-
-  // useEffect(() => {
-  //   if (slug && !!slug.split("-", 2)[1]) {
-  //     getArticle(slug).then(({ data, error }) => {
-  //       if (!!error) {
-  //         setIsSlug(false);
-  //         return;
-  //       }
-  //       setArticle(data);
-  //       setLoading(false);
-  //     });
-  //   } else if (slug) {
-  //     setIsSlug(false);
-  //   }
-  // }, [slug]);
-
   const formatTime = min => {
     if (min > 1) return `0${min} mins`;
     if (min === 1) return `01 min`;
@@ -65,11 +41,11 @@ const ArticleContainer = ({ article }) => {
   };
 
   const formatDate = date => {
-    return new Intl.DateTimeFormat("en-US", {
-      weekday: "short",
-      year: "numeric",
-      day: "2-digit",
-      month: "short"
+    return new Intl.DateTimeFormat('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      day: '2-digit',
+      month: 'short'
     }).format(new Date(date));
   };
 
@@ -89,7 +65,7 @@ const ArticleContainer = ({ article }) => {
           </div>
         </div>
       `;
-    return [content[0], "</h1>", headerContent, content[1]].join("");
+    return [content[0], '</h1>', headerContent, content[1]].join('');
   };
 
   return (
@@ -106,7 +82,8 @@ const ArticleContainer = ({ article }) => {
         <meta
           key="tw:image"
           property="twitter:image"
-          content="https://outcode.dev/profile-image.png"
+          content={`${article.featuredImage ||
+            'https://outcode.dev/profile-image.png'}`}
         />
         <meta
           key="tw:description"
@@ -134,7 +111,8 @@ const ArticleContainer = ({ article }) => {
         <meta
           key="og:image"
           property="og:image"
-          content="https://outcode.dev/profile-image.png"
+          content={`${article.featuredImage ||
+            'https://outcode.dev/profile-image.png'}`}
         />
         <title key="title">{article.title}</title>
       </Head>
@@ -161,12 +139,12 @@ const ArticleContainer = ({ article }) => {
 };
 
 ArticleContainer.getInitialProps = async ({ req, res, query: { slug } }) => {
-  if (!!slug.split("-", 2)[1]) {
+  if (!!slug.split('-', 2)[1]) {
     const { data, error } = await getArticle(slug);
     if (error) {
       const { status, data: errorData } = error;
       if (status === 404) {
-        res.writeHead(302, { Location: "/notfound" });
+        res.writeHead(302, { Location: '/notfound' });
         res.end();
       }
       return { isSlug: false, errorData };
@@ -174,7 +152,7 @@ ArticleContainer.getInitialProps = async ({ req, res, query: { slug } }) => {
 
     return { article: data };
   }
-  res.writeHead(302, { Location: "/notfound" });
+  res.writeHead(302, { Location: '/notfound' });
   res.end();
 };
 

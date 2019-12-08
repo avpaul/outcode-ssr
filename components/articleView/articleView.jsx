@@ -1,29 +1,30 @@
 import React from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import './articleView.scss';
 
 const Container = styled.div`
   position: relative;
   width: 31%;
   height: 500px;
-  margin-bottom: 50px;
+  margin-bottom: 48px;
   padding: 32px 24px;
   color: #ffffff;
   overflow: hidden;
   .article-title {
     display: inline-block;
-    min-height: 120px;
+    min-height: 96px;
     margin-bottom: 16px;
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 600;
     text-decoration: none;
     color: #ffffff;
   }
   .article-description {
-    font-size: 24px;
-    font-weight: 200;
-    overflow-wrap: break-word;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
   }
   &:hover .article-read-time {
     margin-left: 0;
@@ -34,6 +35,11 @@ const Container = styled.div`
     margin-bottom: 0;
     padding: 32px;
   }
+  ${props =>
+    props.backgroundColor &&
+    css`
+      background-color: ${props.backgroundColor};
+    `}
 `;
 
 const ArticleView = ({ bgColor, article }) => {
@@ -44,7 +50,7 @@ const ArticleView = ({ bgColor, article }) => {
   };
 
   return (
-    <Container style={{ backgroundColor: bgColor }}>
+    <Container backgroundColor={bgColor}>
       <Link href={`/${article.slug}`}>
         <a className="article-title">{article.title}</a>
       </Link>

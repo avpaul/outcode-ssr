@@ -11,8 +11,9 @@ const TabHeaderButton = styled.button`
   height: 36px;
   padding: 0 8px;
   margin: 8px;
+  font-family: inherit;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   font-size: 14px;
   line-height: 36px;
@@ -50,7 +51,8 @@ const ReloadBtn = styled.button`
   height: 36px;
   padding: 0 16px;
   text-transform: uppercase;
-  font-weight: 500;
+  font-family: inherit;
+  font-weight: 600;
   text-align: center;
   font-size: 14px;
   line-height: 36px;
@@ -74,7 +76,7 @@ const ReloadBtn = styled.button`
   }
 `;
 
-const TabContainer = ({ tabs, tabContent, theme }) => {
+const TabContainer = ({ tabs, tabContent }) => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const renderTabHeadings = tabHeadings => {
     return tabHeadings.map(heading => (
@@ -85,7 +87,6 @@ const TabContainer = ({ tabs, tabContent, theme }) => {
           setActiveTab(heading);
         }}
         className={activeTab === heading ? 'tab-active' : ''}
-        theme={theme}
       >
         {heading}
       </TabHeaderButton>
@@ -103,7 +104,7 @@ const TabContainer = ({ tabs, tabContent, theme }) => {
           padding: 8
         }}
       >
-        <ReloadBtn theme={theme}>
+        <ReloadBtn>
           <i className="zmdi zmdi-replay" />
           &nbsp; load more
         </ReloadBtn>

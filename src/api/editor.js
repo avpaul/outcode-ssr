@@ -1,5 +1,5 @@
 import axios from 'axios';
-import debounce from '../helpers/debounce';
+import { debounce } from '../helpers';
 
 /**
  *
@@ -11,8 +11,8 @@ const saveArticle = data =>
     const { slug, featuredImage, description, title } = data;
     const token = localStorage.getItem('token');
 
-    const method = slug === null ? 'post' : 'put';
-    const uri = slug === null ? '/articles' : `/articles/${slug}`;
+    const method = slug === undefined ? 'post' : 'put';
+    const uri = method === 'post' ? '/articles' : `/articles/${slug}`;
     delete data.slug;
     try {
       if (featuredImage === null) delete data.featuredImage;

@@ -11,7 +11,7 @@ const Button = ({ onSubmit }) => {
       <input
         type="email"
         className="login-button__email"
-        placeholder="email"
+        placeholder="Email"
         onChange={evt => {
           setEmail(evt.target.value.trim());
         }}
@@ -30,7 +30,7 @@ const Button = ({ onSubmit }) => {
       <input
         type="password"
         className="login-button__password"
-        placeholder="password"
+        placeholder="Password"
         onChange={evt => {
           setPassword(evt.target.value);
         }}

@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment, useEffect } from 'react';
+import React, { useRef, Fragment, useEffect, useReducer } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
@@ -8,8 +8,17 @@ import Article from '../components/article/article';
 import Chips from '../components/chips/chips';
 import upLoader from '../src/helpers/imageUploader';
 import { getTitle, getDescription } from '../src/helpers/getArticleParts';
+import { cookieParser } from '../src/helpers';
 import { getArticle } from '../src/api/article.js';
 import './styles/editor.scss';
+import {
+  reducer,
+  CHANGE_FEATURED_IMG,
+  SET_ERRORS,
+  CHANGE_EDITOR_PREVIEW,
+  CHANGE_MASS,
+  CHANGE_TAGS
+} from '../components/editorComponent/editorReducer';
 
 const Container = styled.div`
   position: relative;
@@ -24,7 +33,7 @@ const EditStatus = styled.div`
   font-size: 14px;
   line-height: 20px;
   font-weight: 200;
-  font-family: 'Avenir';
+  font-family: inherit;
   color: #17223b;
   border-bottom: #17223b 1px solid;
   @media (prefers-color-scheme: dark) {
@@ -33,134 +42,151 @@ const EditStatus = styled.div`
   }
 `;
 
-const Editor = ({ history }) => {
-  const [content, setContent] = useState('');
-  const [errors, setErrors] = useState({});
-  const [contentHTML, setContentHTML] = useState('<p>Tell your story...</p>');
-  const [title, setTitle] = useState('');
-  const [status, setStatus] = useState('draft');
-  const [slug, setSlug] = useState(null);
-  const [description, setDescription] = useState('');
-  const [featuredImage, setFeaturedImage] = useState(null);
-  const [chips, setChips] = useState([]);
-  const [preview, setPreview] = useState(false);
-  const [imageUploaded, setImageUploaded] = useState(false);
-  const [saveStatus, setSaveStatus] = useState(false);
+const Editor = ({ article }) => {
+  const initialState = {
+    preview: false,
+    html: '<p>Tell your story...</p>',
+    status: 'draft',
+    content: '',
+    tags: []
+  };
+  const [state, dispatch] = useReducer(reducer, initialState);
   const router = useRouter();
   const imageInput = useRef(null);
   const markdownInput = useRef(null);
 
   useEffect(() => {
-    const { slug: updateSlug } = router.query;
-
-    updateSlug &&
-      getArticle(updateSlug)
-        .then(({ data: article }) => {
-          setContent(article.content);
-          setChips(article.tags);
-          setSlug(article.slug);
-          setStatus(article.status);
-          setTitle(article.title);
-          setDescription(article.description);
-          setContentHTML(convertMarkdown(article.content));
-        })
-        .catch(error => {});
-  }, [router.query]);
+    if (article) {
+      dispatch({
+        type: CHANGE_MASS,
+        payload: {
+          slug: article.slug,
+          tags: article.tags,
+          status: article.status,
+          title: article.title,
+          content: article.content,
+          description: article.description,
+          html: convertMarkdown(article.content)
+        }
+      });
+    }
+  }, [article]);
 
   const uploadImage = async evt => {
     evt.preventDefault();
     const file = evt.target.files[0];
     try {
       const { default: imageURL } = await upLoader(file);
-      setFeaturedImage(imageURL);
       return imageURL;
     } catch (error) {
-      setErrors({ image: 'image upload failed', ...errors });
+      return error;
     }
   };
 
   const onChange = evt => {
-    setSaveStatus(false);
-    const HTMLContent = convertMarkdown(evt.target.value);
-    const newTitle = getTitle(HTMLContent);
-    const newDescription = getDescription(HTMLContent);
+    const html = convertMarkdown(evt.target.value);
+    const title = getTitle(html);
+    const description = getDescription(html);
+    dispatch({
+      type: CHANGE_MASS,
+      payload: {
+        content: evt.target.value,
+        html,
+        title,
+        description,
+        isSaving: false
+      }
+    });
 
-    setContentHTML(HTMLContent);
-    setContent(evt.target.value);
-    setTitle(newTitle);
-    setDescription(newDescription);
-
-    if (title.length !== 0) {
+    if (!!state.title) {
       saveArticle({
         content: evt.target.value,
-        tags: chips,
-        title: newTitle,
-        description: newDescription,
-        featuredImage,
-        status,
-        slug
+        tags: state.tags,
+        title,
+        description,
+        featuredImage: state.featuredImage,
+        status: state.status,
+        slug: state.slug
       })
         .then(({ data: article }) => {
-          setSlug(article.slug);
-          setStatus(article.status);
-          setSaveStatus(true);
+          dispatch({
+            type: CHANGE_MASS,
+            payload: {
+              slug: article.slug,
+              status: article.status,
+              isSaving: true
+            }
+          });
         })
         .catch(error => {
-          console.log(error);
+          dispatch({
+            type: SET_ERRORS,
+            payload: { article: error.message || 'Saving article failed!' }
+          });
         });
     }
   };
 
   const onPublish = () => {
-    setStatus('published');
     saveArticle({
-      content,
-      tags: chips,
-      title,
-      description,
-      featuredImage,
+      content: state.content,
+      tags: state.tags,
+      title: state.title,
+      description: state.description,
+      featuredImage: state.featuredImage,
       status: 'published',
-      slug
+      slug: state.slug
     })
       .then(({ data: article }) => {
         router.push(`/${article.slug}`);
       })
       .catch(error => {
-        console.log(error);
+        dispatch({
+          type: SET_ERRORS,
+          payload: { article: error.message || 'Publishing article failed!' }
+        });
       });
   };
 
   const onUploadImage = evt => {
-    uploadImage(evt).then(url => {
-      setImageUploaded(true);
-      navigator.clipboard.writeText(url).then(
-        setTimeout(() => {
-          setImageUploaded(false);
-        }, 5000)
-      );
-    });
+    uploadImage(evt)
+      .then(url => {
+        dispatch({ type: CHANGE_FEATURED_IMG, payload: imageURL });
+        dispatch({ type: CHANGE_IMAGE_UPLOADED });
+        navigator.clipboard.writeText(url).then(
+          setTimeout(() => {
+            dispatch({ type: CHANGE_IMAGE_UPLOADED });
+          }, 5000)
+        );
+      })
+      .catch(() => {
+        dispatch({
+          type: SET_ERRORS,
+          payload: { image: 'image upload failed' }
+        });
+      });
   };
 
   return (
     <>
       <Head>
-        <title key="title">{title || 'Start writing ✍️'}</title>
+        <title key="title">{state.title || 'Start writing ✍️'}</title>
       </Head>
       <Container>
         <div className="editor-status">
-          {imageUploaded && (
+          {state.imageUploaded && (
             <div className="toast">
               <i className="zmdi zmdi-check" />
               &nbsp; Image uploaded!
             </div>
           )}
-          {saveStatus ? (
+          {state.isSaving ? (
             <EditStatus>
-              <i className="zmdi zmdi-check"></i>&nbsp;Saved
+              <i className="zmdi zmdi-check"></i>&nbsp;&nbsp;Saved
             </EditStatus>
           ) : (
             <EditStatus>
-              <i className="zmdi zmdi-edit"></i>&nbsp;Editing
+              <i className="zmdi zmdi-edit"></i>&nbsp;&nbsp;Editing
             </EditStatus>
           )}
         </div>
@@ -168,11 +194,9 @@ const Editor = ({ history }) => {
           <button
             title="Preview Article"
             className="btn-editor-preview"
-            onClick={() => {
-              setPreview(!preview);
-            }}
+            onClick={() => dispatch({ type: CHANGE_EDITOR_PREVIEW })}
           >
-            <i className={`zmdi zmdi-${!preview ? 'eye' : 'edit'}`} />
+            <i className={`zmdi zmdi-${!state.preview ? 'eye' : 'edit'}`} />
           </button>
           <button
             title="Add Image"
@@ -195,38 +219,61 @@ const Editor = ({ history }) => {
           <button
             title="Publish Article"
             className="btn-publish"
-            disabled={slug === null || status === 'published' ? true : false}
+            disabled={
+              state.slug === undefined || state.status === 'published'
+                ? true
+                : false
+            }
             onClick={onPublish}
           >
             <i className="zmdi zmdi-file-text" />
           </button>
         </div>
-        {!preview ? (
+        {!state.preview ? (
           <Fragment>
             <textarea
               className="article-editor--container"
               placeholder="Tell your story..."
-              value={content}
+              value={state.content}
               ref={markdownInput}
               onChange={onChange}
             />
 
             <Chips
               suggestion={[]}
-              value={chips}
+              value={state.tags}
               onChange={values => {
-                setChips([...values]);
+                console.log(values);
+                dispatch({ type: CHANGE_TAGS, payload: values });
               }}
             />
           </Fragment>
         ) : (
           <div className="article-editor--view">
-            <Article content={contentHTML} tags={chips} />
+            <Article content={state.html} tags={state.tags} />
           </div>
         )}
       </Container>
     </>
   );
+};
+
+Editor.getInitialProps = async ({ req, res, query: { slug } }) => {
+  const cookieString = req.headers.cookie;
+  const cookies = cookieParser(cookieString);
+  if (!cookies.token) {
+    res.writeHead(302, { Location: '/notfound' });
+    res.end();
+  }
+  if (!!slug && !!slug.split('-', 2)[1]) {
+    const { data, error } = await getArticle(slug);
+    if (!!error && error.status === 404) {
+      res.writeHead(302, { Location: '/notfound' });
+      res.end();
+    }
+    return { article: data };
+  }
+  return {};
 };
 
 export default Editor;

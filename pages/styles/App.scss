@@ -9,6 +9,8 @@ body {
   height: 100%;
   width: 100%;
   font-family: 'Avenir';
+  font-family: 'SF Mono'; // TODO: change font to SF Mono
+  font-weight: 400;
   font-display: optional;
   @media (prefers-color-scheme: dark) {
     background-color: #202124;

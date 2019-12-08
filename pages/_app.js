@@ -19,12 +19,12 @@ const AppContainerWrapper = styled.div`
 const AppContainer = styled.div`
   position: relative;
   width: 100%;
-  @media (min-width: 768px) {
-    width: 70%;
-    margin: 0 auto;
-  }
   @media (min-width: 1441px) {
     width: 55%;
+    margin: 0 auto;
+  }
+  @media (min-width: 768px) {
+    width: 70%;
     margin: 0 auto;
   }
 `;
@@ -88,7 +88,7 @@ class AppWrapper extends App {
           <meta
             httpEquiv="Content-Security-Policy"
             content={process.env.APP_CSP}
-          /> 
+          />
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
@@ -113,18 +113,43 @@ class AppWrapper extends App {
             __html: `
           @font-face {
               font-family: 'Avenir';
-              src: url('./avenir/AvenirLTStd-Light.woff');
+              src: local('Avenir'), url('./avenir/AvenirLTStd-Light.woff') format("woff");
               font-weight: 200;
             }
           @font-face {
               font-family: 'Avenir';
-              src: url('./avenir/AvenirLTStd-Medium.woff');
-              font-weight: 500;
+              src: local('Avenir'), url('./avenir/AvenirLTStd-Medium.woff') format("woff");
+              font-weight: 400;
             }
           @font-face {
               font-family: 'Avenir';
-              src: url('./avenir/AvenirLTStd-Heavy.woff');
-              font-weight: 700;
+              src: local('Avenir'), url('./avenir/AvenirLTStd-Heavy.woff') format("woff");
+              font-weight: 600;
+            }
+
+            @font-face {
+              font-display: optional;
+              font-family: 'SF Mono';
+              src: local('SF Mono'), 
+                   url('./SFMono/SFMonoLight.woff') format("woff"), 
+                   url('./SFMono/SFMono-Light.otf') format("opentype");
+              font-weight: 200;
+            }
+          @font-face {
+            font-display: optional;
+              font-family: 'SF Mono';
+              src: local('SF Mono'), 
+                   url('./SFMono/SFMonoRegular.woff') format("woff"), 
+                   url('./SFMono/SFMono-Regular.otf') format("opentype");
+              font-weight: 400;
+            }
+          @font-face {
+              font-display: optional;
+              font-family: 'SF Mono';
+              src: local('SF Mono'), 
+                   url('./SFMono/SFMonoBold.woff') format("woff"), 
+                   url('./SFMono/SFMono-Bold.otf') format("opentype");
+              font-weight: 600;
             }
           `
           }}

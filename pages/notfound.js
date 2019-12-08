@@ -22,7 +22,7 @@ const Caption = styled.div`
   padding: 8px;
   margin-top: 8px;
   margin-bottom: 8px;
-  font-family: 'Avenir';
+  font-family: inherit;
   font-weight: 200;
   font-size: 24px;
   color: #17223b;

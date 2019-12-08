@@ -6,7 +6,7 @@ const login = ({ email, password }) => {
       const { data } = await axios.post(
         `${process.env.APP_API_URL}/auth/login`,
         { email, password },
-        {}
+        { withCredentials: true }
       );
       resolve(data);
     } catch (error) {

@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import LoginButton from '../components/loginButton/button';
 import login from '../src/api/user';
-import { tokenUpdateService } from '../src/services/userService';
 
 const Container = styled.div`
   position: relative;
@@ -16,9 +15,7 @@ const Container = styled.div`
     0 2px 4px -1px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   img {
-    width: 150%;
-    height: 100%;
-    margin-left: -25%;
+    margin-left: -14%;
   }
 `;
 
@@ -40,11 +37,7 @@ const Login = () => {
 
   return (
     <Container>
-      <img
-        src="https://image.freepik.com/free-vector/programmers-concept-with-flat-design_23-2147841208.jpg"
-        alt=""
-      />
-
+      <img src="/android-chrome-512x512.png" alt="" />
       <LoginButton onSubmit={userLogin} />
     </Container>
   );

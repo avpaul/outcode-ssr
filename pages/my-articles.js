@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import TabContainer from '../components/tab';
 import List from '../components/list/list';
@@ -9,13 +8,14 @@ import {
   getPublishedArticles,
   deleteArticle
 } from '../src/api/article';
+import { cookieParser } from '../src/helpers';
 
 const NoArticlesBanner = styled.div`
   margin-top: 14px;
   padding-left: 8px;
   color: #888888;
-  font-family: 'Avenir';
-  font-weight: 200;
+  font-family: inherit;
+  font-weight: 400;
   font-size: 18px;
   a {
     text-decoration: none;
@@ -27,18 +27,11 @@ const NoArticlesBanner = styled.div`
 `;
 
 const UserArticles = () => {
-  const router = useRouter();
   const [publishedArticles, setPublishedArticles] = useState([]);
   const [draftArticles, setDraftArticles] = useState([]);
 
   useEffect(() => {
     getPublishedArticles({ page: 0, limit: 6 }).then(({ data, error }) => {
-      if (error) {
-        if (error === 'Unauthorized') {
-          return router.push('/login');
-        }
-        return;
-      }
       setPublishedArticles(data);
     });
 
@@ -147,6 +140,15 @@ const UserArticles = () => {
       />
     </div>
   );
+};
+
+UserArticles.getInitialProps = async ({ req, res }) => {
+  const cookies = cookieParser(req.headers.cookie);
+  if (!cookies.token) {
+    res.writeHead(302, { Location: '/notfound' });
+    res.end();
+  }
+  return {};
 };
 
 export default UserArticles;

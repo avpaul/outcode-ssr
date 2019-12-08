@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
-import ArticleView from "../components/articleView/articleView";
-import SummaryBio from "../components/summaryBio/summaryBio";
-import { getMainArticles } from "../src/api/article";
-import reduceTo from "../src/helpers/reduceTo";
-import Loader from "../components/loader/loader";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import ArticleView from '../components/articleView/articleView';
+import SummaryBio from '../components/summaryBio/summaryBio';
+import { getMainArticles } from '../src/api/article';
+import { reduceTo } from '../src/helpers';
+import Loader from '../components/loader/loader';
+
+const Wrapper = styled.div`
+  margin-top: 32;
+  margin-bottom: 32;
+`;
 
 const SecondaryArticles = styled.section`
   display: flex;
@@ -17,12 +22,19 @@ const SecondaryArticles = styled.section`
   }
 `;
 
+const ReloadBtnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
 const ReloadBtn = styled.button`
   min-width: 64px;
   height: 36px;
   padding: 0 16px;
+  font-family: inherit;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   font-size: 14px;
   line-height: 36px;
@@ -55,8 +67,8 @@ const ReloadBtn = styled.button`
 `;
 
 const Heading = styled.h1`
-  margin: 16px 0;
-  font-size: 36px;
+  margin: 32px 0;
+  font-size: 30px;
   color: #17223b;
   @media (prefers-color-scheme: dark) {
     color: #ffffff;
@@ -72,26 +84,13 @@ const Home = ({ articles: initialArticles, error: fetchError }) => {
   const [page, setPage] = useState(0);
 
   const colors = [
-    "#167C80",
-    "#72616E",
-    "#B33951",
-    "#E8846B",
-    "#16528E",
-    "#F3A712"
+    '#167C80',
+    '#72616E',
+    '#B33951',
+    '#BE5504',
+    '#16528E',
+    '#F3A712'
   ];
-
-  // useEffect(() => {
-  //   getMainArticles({ page: 0, limit: 6 })
-  //     .then(({ data }) => {
-  //       setArticles(data);
-  //       setLoading(false);
-  //     })
-  //     .catch(error => {
-  //       setArticles([]);
-  //       setLoading(false);
-  //       // TODO: display the error
-  //     });
-  // }, []);
 
   const loadMore = () => {
     setPage(page + 1);
@@ -107,10 +106,10 @@ const Home = ({ articles: initialArticles, error: fetchError }) => {
   };
 
   return (
-    <div style={{ marginTop: 32, marginBottom: 32 }}>
+    <Wrapper>
       <SummaryBio />
       <Heading>
-        Things I Learned{" "}
+        Things I Learned{' '}
         <span role="img" aria-label="thought">
           💭
         </span>
@@ -127,13 +126,7 @@ const Home = ({ articles: initialArticles, error: fetchError }) => {
         </SecondaryArticles>
       )}
       {loading && <Loader size="small" />}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end"
-        }}
-      >
+      <ReloadBtnWrapper>
         {(articles || loading) && (
           <ReloadBtn
             onClick={loadMore}
@@ -144,8 +137,8 @@ const Home = ({ articles: initialArticles, error: fetchError }) => {
             &nbsp; load more
           </ReloadBtn>
         )}
-      </div>
-    </div>
+      </ReloadBtnWrapper>
+    </Wrapper>
   );
 };
 

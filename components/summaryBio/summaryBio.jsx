@@ -35,16 +35,17 @@ const SummaryText = styled.div`
   margin-left: 24px;
   margin-right: 16px;
   font-weight: 200;
-  font-family: 'Avenir';
+  font-family: inherit;
   color: #17223b;
+
   p.summary_intro {
     padding-bottom: 24px;
-    font-size: 28px;
+    font-size: 24px;
   }
   p.summary_body {
     padding-bottom: 32px;
-    font-size: 24px;
-    word-break: break-word;
+    font-size: 20px;
+    line-height: 28px;
     span[aria-label='tag'] {
       color: #ff6768;
     }

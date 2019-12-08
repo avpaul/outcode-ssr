@@ -22,7 +22,7 @@ const Footer = styled.footer`
   }
 `;
 
-const FooterLeft = styled.div`
+const FooterIconLeft = styled.div`
   border-right: 2px #6b778d solid;
   padding-left: 4px;
   padding-right: 4px;
@@ -31,13 +31,13 @@ const FooterLeft = styled.div`
   div:first-of-type {
     color: #17223b;
     font-size: 32px;
-    font-family: 'Avenir';
+    font-family: inherit;
   }
 
   div:last-of-type {
     color: #6b778d;
     text-align: right;
-    font-family: 'Avenir';
+    font-family: inherit;
     font-size: 16px;
   }
 
@@ -53,11 +53,11 @@ const FooterLeft = styled.div`
   }
 `;
 
-const FooterRight = styled.div`
+const FooterIconRight = styled.div`
   display: inline-block;
   padding-left: 4px;
   padding-right: 4px;
-  font-family: 'Avenir';
+  font-family: inherit;
   font-size: 16px;
   color: #6b778d;
 
@@ -66,10 +66,16 @@ const FooterRight = styled.div`
   }
 `;
 
+const FooterIcon = styled.div`
+  min-width: 350px;
+  font-weight: 200;
+  font-family: 'Avenir';
+`;
+
 const DesignLabel = styled.div`
   min-width: 350px;
   text-align: right;
-  font-family: 'Avenir';
+  font-family: inherit;
   font-weight: 200;
   font-size: 18px;
   color: #6b778d;
@@ -80,21 +86,22 @@ const DesignLabel = styled.div`
 `;
 
 const Navbar = () => {
-  const [theme, setTheme] = useState('light');
-
+  // TODO: activate in 2020
+  const bloggingSince = `2019 - ${new Date().getFullYear()}`;
   return (
     <Footer>
-      <div style={{ minWidth: 350, fontWeight: 300 }}>
-        <FooterLeft>
+      <FooterIcon>
+        <FooterIconLeft>
           <div>outcode</div>
           <div>by paul</div>
-        </FooterLeft>
+        </FooterIconLeft>
 
-        <FooterRight>
+        <FooterIconRight>
           <span>&#169;&nbsp;</span>
+          {/* <span>avpaul&nbsp; {bloggingSince}</span> */}
           <span>avpaul&nbsp; 2019</span>
-        </FooterRight>
-      </div>
+        </FooterIconRight>
+      </FooterIcon>
       <div className="footer-spacer" />
       <DesignLabel>
         Designed with much&nbsp;

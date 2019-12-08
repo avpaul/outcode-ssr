@@ -6,8 +6,8 @@
   padding: 8px 0;
   border-bottom: #17223b 1px solid;
   .tab-title {
-    font-family: 'Avenir';
-    font-weight: 200;
+    font-family: inherit;
+    font-weight: 400;
     font-size: 18px;
     text-decoration-line: none;
     color: #17223b;
@@ -25,7 +25,7 @@
       padding: 0 8px;
       margin: 8px;
       text-transform: uppercase;
-      font-weight: 500;
+      font-weight: 600;
       text-align: center;
       font-size: 14px;
       line-height: 36px;

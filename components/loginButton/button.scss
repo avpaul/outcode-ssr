@@ -2,7 +2,7 @@
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 250px;
+  width: 350px;
   height: 42px;
   margin: 8px auto;
   padding: 0;
@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
   background-color: #ffffff;
   color: #ffffff;
   border: none;
@@ -33,7 +34,9 @@
     height: 100%;
     padding: 8px;
     border: none;
-    font-weight: 200;
+    font-family: inherit;
+    font-weight: 400;
+    letter-spacing: 1px;
     font-size: 16px;
     text-align: center;
     &:focus {
@@ -41,13 +44,7 @@
     }
   }
 
-  .login-button__email {
-  }
-  .login-button__password {
-  }
   .login-button__btn {
-    font-weight: 500;
-    letter-spacing: 1px;
     background-color: #f9a602;
     cursor: pointer;
   }
