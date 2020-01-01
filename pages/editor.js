@@ -262,7 +262,7 @@ Editor.getInitialProps = async ({ req, res, query: { slug } }) => {
   const cookieString = req.headers.cookie;
   const cookies = cookieParser(cookieString);
   if (!cookies.token) {
-    res.writeHead(302, { Location: '/notfound' });
+    res.writeHead(302, { Location: '/login' });
     res.end();
   }
   if (!!slug && !!slug.split('-', 2)[1]) {

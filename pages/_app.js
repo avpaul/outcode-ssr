@@ -19,12 +19,12 @@ const AppContainerWrapper = styled.div`
 const AppContainer = styled.div`
   position: relative;
   width: 100%;
-  @media (min-width: 1441px) {
-    width: 55%;
-    margin: 0 auto;
-  }
   @media (min-width: 768px) {
     width: 70%;
+    margin: 0 auto;
+  }
+  @media (min-width: 1441px) {
+    width: 55%;
     margin: 0 auto;
   }
 `;

@@ -25,14 +25,10 @@ const Login = () => {
   const userLogin = ({ email, password }) => {
     if (!email || !password) return null;
     login({ email, password })
-      .then(({ token }) => {
-        tokenUpdateService.set(token);
+      .then(() => {
         router.push('/');
       })
-      .catch(error => {
-        if (error.error) {
-        }
-      });
+      .catch(error => {});
   };
 
   return (
