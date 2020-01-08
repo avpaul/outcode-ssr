@@ -85,10 +85,10 @@ class AppWrapper extends App {
             key="og:image"
             content="https://outcode.dev/profile-image.png"
           />
-          <meta
+          {/* <meta
             httpEquiv="Content-Security-Policy"
             content={process.env.APP_CSP}
-          />
+          /> */}
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"

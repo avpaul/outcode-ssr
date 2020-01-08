@@ -26,7 +26,7 @@ const Login = () => {
     if (!email || !password) return null;
     login({ email, password })
       .then(() => {
-        router.push('/');
+        // router.push('/');
       })
       .catch(error => {});
   };

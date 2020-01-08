@@ -86,7 +86,6 @@ const DesignLabel = styled.div`
 `;
 
 const Navbar = () => {
-  // TODO: activate in 2020
   const bloggingSince = `2019 - ${new Date().getFullYear()}`;
   return (
     <Footer>
@@ -98,8 +97,7 @@ const Navbar = () => {
 
         <FooterIconRight>
           <span>&#169;&nbsp;</span>
-          {/* <span>avpaul&nbsp; {bloggingSince}</span> */}
-          <span>avpaul&nbsp; 2019</span>
+          <span>avpaul&nbsp; {bloggingSince}</span>
         </FooterIconRight>
       </FooterIcon>
       <div className="footer-spacer" />

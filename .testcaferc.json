@@ -1,0 +1,6 @@
+{
+  "path": "tests",
+  "takeOnFails": false,
+  "browsers": "chrome",
+  "reporters": "spec"
+}

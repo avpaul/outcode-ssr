@@ -18,13 +18,16 @@
     "react-ga": "^2.6.0",
     "react-html-parser": "^2.0.2",
     "react-router-dom": "^5.0.1",
-    "styled-components": "^5.0.0-beta.8"
+    "styled-components": "^5.0.0-beta.8",
+    "testcafe": "^1.7.1"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "e2e": "testcafe",
+    "e2e:headless": "testcafe chrome:headless"
   },
   "eslintConfig": {
     "extends": "react-app"
