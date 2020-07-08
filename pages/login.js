@@ -25,10 +25,12 @@ const Login = () => {
   const userLogin = ({ email, password }) => {
     if (!email || !password) return null;
     login({ email, password })
-      .then(() => {
-        // router.push('/');
+      .then((data) => {
+        router.push(`/login-success?t=${data.token}&r=/`);
       })
-      .catch(error => {});
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
