@@ -21,7 +21,7 @@ const LoginSuccess = ({ t, r }) => {
       cookies.set('token', t, {
         path: '/',
         expires: new Date(Date.now() + 7776e6),
-        secure: false,
+        secure: true,
         httpOnly: false,
         sameSite: 'none',
       });
