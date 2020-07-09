@@ -1,8 +1,13 @@
 import axios from 'axios';
+axios.defaults.withCredentials = true;
+
+const axiosInstance = axios.create({
+  withCredentials: true,
+});
 
 const getMainArticles = async ({ page = 0, limit = 6 }) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       `${process.env.APP_API_URL}/articles?page=${page}&limit=${limit}`,
       {}
     );
@@ -15,11 +20,11 @@ const getMainArticles = async ({ page = 0, limit = 6 }) => {
 const getPublishedArticles = async ({ page = 0, limit = 6 }) => {
   try {
     const token = localStorage.getItem('token');
-    const { data, status } = await axios.get(
+    const { data, status } = await axiosInstance.get(
       `${process.env.APP_API_URL}/articles/published?page=${page}&limit=${limit}`,
       {
         headers: { authorization: `Bearer ${token}` },
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     );
     return data;
@@ -37,11 +42,11 @@ const getPublishedArticles = async ({ page = 0, limit = 6 }) => {
 const getDraftArticles = async ({ page = 0, limit = 6 }) => {
   try {
     const token = localStorage.getItem('token');
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       `${process.env.APP_API_URL}/articles/drafts?page=${page}&limit=${limit}`,
       {
         headers: { authorization: `Bearer ${token}` },
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     );
     return data;
@@ -56,9 +61,9 @@ const getDraftArticles = async ({ page = 0, limit = 6 }) => {
   }
 };
 
-const getArticle = async slug => {
+const getArticle = async (slug) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       `${process.env.APP_API_URL}/articles/${slug}`,
       {}
     );
@@ -68,15 +73,15 @@ const getArticle = async slug => {
   }
 };
 
-const deleteArticle = async slug => {
+const deleteArticle = async (slug) => {
   const token = localStorage.getItem('token');
 
   try {
-    const { data } = await axios.delete(
+    const { data } = await axiosInstance.delete(
       `${process.env.APP_API_URL}/articles/${slug}`,
       {
         headers: { authorization: `Bearer ${token}` },
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     );
     return data;
@@ -90,5 +95,5 @@ export {
   getPublishedArticles,
   getDraftArticles,
   getArticle,
-  deleteArticle
+  deleteArticle,
 };
